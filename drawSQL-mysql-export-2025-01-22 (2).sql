@@ -29,6 +29,12 @@ CREATE TABLE `Categories`(
     `parent_id` BIGINT NULL,
     `is_recurring` BOOLEAN NOT NULL DEFAULT '0'
 );
+CREATE TABLE Settings(
+    `profile_id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `dark_mode` BOOLEAN NOT NULL default FALSE,
+    `currency_notation` ENUM('') NOT NULL DEFAULT '₹',
+    `notification_preferences` BOOLEAN NOT NULL default TRUE
+);
 CREATE TABLE `Recurring_transactions`(
     `transaction_id` BIGINT NOT NULL,
     `profile_id` BIGINT NOT NULL,
