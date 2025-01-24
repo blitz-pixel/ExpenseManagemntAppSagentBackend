@@ -24,35 +24,35 @@ CREATE TABLE `Budget` (
                           `budget_name` VARCHAR(255) NOT NULL,
                           `amount` DECIMAL(10,2) NOT NULL CHECK (`amount` > 0),
                           `budget_start_date` DATE NOT NULL,
-                          `budget_end_date` DATE NOT NULL CHECK (`budget_end_date` >= `budget_start_date`),
+                          `budget_end_date` DATE NOT NULL CHECK (`budget_end_date` >= `budget_start_date` ),
                           `budget_frequency` ENUM('MONTHLY', 'YEARLY') NOT NULL,
                           FOREIGN KEY (`account_id`) REFERENCES `Account`(`account_id`) ON DELETE CASCADE
 );
 
 
 -- -- User Account Access Table
--- CREATE TABLE `UserAccountAccess` (
---                                      `user_id` BIGINT NOT NULL,
---                                      `shared_account_id` BIGINT NOT NULL,
---                                      `role` ENUM('ADMIN', 'EDITOR', 'VIEWER') NOT NULL DEFAULT 'ADMIN',
---                                      `created_by` BIGINT NOT NULL,
---                                      PRIMARY KEY (`user_id`, `shared_account_id`),
---                                      FOREIGN KEY (`user_id`) REFERENCES `User`(`user_id`) ON DELETE CASCADE,
---                                      FOREIGN KEY (`shared_account_id`) REFERENCES `SharedAccount`(`shared_account_id`) ON DELETE CASCADE
--- );
---
+CREATE TABLE `UserAccountAccess` (
+                                      `user_id` BIGINT NOT NULL,
+                                      `shared_account_id` BIGINT NOT NULL,
+                                      `role` ENUM('ADMIN', 'EDITOR', 'VIEWER') NOT NULL DEFAULT 'ADMIN',
+                                      `created_by` BIGINT NOT NULL,
+                                      PRIMARY KEY (`user_id`, `shared_account_id`),
+                                      FOREIGN KEY (`user_id`) REFERENCES `User`(`user_id`) ON DELETE CASCADE,
+                                      FOREIGN KEY (`shared_account_id`) REFERENCES `Account`(`account_id`) ON DELETE CASCADE
+ );
+
 -- -- Audit Logs Table
--- CREATE TABLE `AuditLogs` (
---                              `log_id` BIGINT AUTO_INCREMENT PRIMARY KEY,
---                              `user_id` BIGINT NOT NULL,
---                              `shared_account_id` BIGINT NOT NULL,
---                              `action` ENUM('CREATE', 'UPDATE', 'DELETE') NOT NULL,
---                              `record_id` BIGINT NOT NULL, -- Affected row ID
---                              `table_name` VARCHAR(255) NOT NULL, -- Affected table
---                              `access_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---                              FOREIGN KEY (`user_id`) REFERENCES `User`(`user_id`) ON DELETE CASCADE,
---                              FOREIGN KEY (`shared_account_id`) REFERENCES `SharedAccount`(`shared_account_id`) ON DELETE CASCADE
--- );
+CREATE TABLE `AuditLogs` (
+                              `log_id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+                              `user_id` BIGINT NOT NULL,
+                              `shared_account_id` BIGINT NOT NULL,
+                              `action` ENUM('CREATE', 'UPDATE', 'DELETE') NOT NULL,
+                              `record_id` BIGINT NOT NULL, -- Affected row ID
+                              `table_name` VARCHAR(255) NOT NULL, -- Affected table
+                              `access_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                              FOREIGN KEY (`user_id`) REFERENCES `User`(`user_id`) ON DELETE CASCADE,
+                              FOREIGN KEY (`shared_account_id`) REFERENCES `UserAccountAccess`(`shared_account_id`) ON DELETE CASCADE
+);
 
 
 
@@ -107,7 +107,7 @@ CREATE TABLE `CategoryLimit` (
                                  `amount` DECIMAL(10,2) NOT NULL CHECK (`amount` > 0), -- Ensure limit is positive
 --                                  `Limit_frequency` ENUM('WEEKLY','MONTHLY', 'YEARLY') NOT NULL
                                  `limit_start_date` DATE NOT NULL,
-                                  `limit_end_date` DATE NOT NULL CHECK (`limit_start_date` >= `limit_start_date`),
+                                  `limit_end_date` DATE NOT NULL CHECK (`limit_start_date` >= `limit_start_date` AND `limit_end_date`)
                                   `limit_frequency` ENUM('MONTHLY', 'YEARLY') NOT NULL,
                                  FOREIGN KEY (`budget_id`) REFERENCES `Budget`(`budget_id`) ON DELETE CASCADE,
                                  FOREIGN KEY (`category_id`) REFERENCES `Category`(`category_id`) ON DELETE CASCADE
