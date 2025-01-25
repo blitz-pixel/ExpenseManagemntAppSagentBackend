@@ -1,140 +1,176 @@
-import { WalletCards, Receipt, FileText, FolderKanban } from "lucide-react"
+import { WalletCards, Receipt } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Grid2, Box , Paper,Typography} from "@mui/material";
+import { Grid2, Box, Paper, Typography } from "@mui/material";
 
 function Dashboard() {
-      return (
-        <Box
-  sx={{
-    display: "grid",
-    position: "relative",
-    border: '1px dashed grey' ,
-    justifyContent: "center",
-    gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, // Two columns on medium screens
-    gridTemplateRows: { xs: "auto", md: "200px 200px" }, // Two rows on medium screens
-    rowGap: "70px",
-    columnGap: "20px",
-    // padding: "20px",
-    width: "800px",
-    height: "520px",
-    
-  }}
->
+  return (
+    <Box
+      sx={{
+        display: "grid",
+        position: "relative",
+        // border: "1px dashed grey",
+        justifyContent: "center",
+        gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+        gridTemplateRows: { xs: "auto", md: "200px 200px" },
+        // rowGap: "70px",
+        // columnGap: "20px",
+        width: "800px",
+        height: "520px",
+      }}
+    >
+      <Link to="/income">
+        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+          <a href="#">
+            <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+          </a>
+          <div className="p-5">
+            <a href="#">
+              <Typography variant="h5" className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                Income Overview
+              </Typography>
+            </a>
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              Manage and track all your income streams here.
+            </p>
+            <a
+              href="#"
+              className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              View Details
+              <svg
+                className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 10"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M1 5h12m0 0L9 1m4 4L9 9"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </Link>
 
-<Link to="/income">
-    
-  <Paper
-    sx={{
-      height: "250px",
-      width: "398px",
-      display: "flex",
+      <Link to="/expense">
+        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+          <a href="#">
+            <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+          </a>
+          <div className="p-5">
+            <a href="#">
+              <Typography variant="h5" className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                Expense Overview
+              </Typography>
+            </a>
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              Keep track of your expenses and manage your budgets.
+            </p>
+            <a
+              href="#"
+              className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              View Details
+              <svg
+                className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 10"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M1 5h12m0 0L9 1m4 4L9 9"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </Link>
 
-      alignItems: "center",
-      justifyContent: "center",
-      gridColumn: { xs: "1", md: "1 / span 1" }, // First column on medium screens
-      gridRow: { xs: "1", md: "1" }, // First row on medium screens
-    }}
-  >
-    <Typography variant="h4">Income</Typography>
-    <Box sx={{
-      border: '1px dashed grey',
-      position: 'absolute',
-      right: '510px',
-    }}>
-      <WalletCards />
+      <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+        <a href="#">
+          <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+        </a>
+        <div className="p-5">
+          <a href="#">
+            <Typography variant="h5" className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              Report
+            </Typography>
+          </a>
+          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            Get transaction report here
+          </p>
+          <a
+            href="#"
+            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            View Details
+            <svg
+              className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+        <a href="#">
+          <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+        </a>
+        <div className="p-5">
+          <a href="#">
+            <Typography variant="h5" className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              Recent Transactions
+            </Typography>
+          </a>
+          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            View most recent Transactions here
+          </p>
+          <a
+            href="#"
+            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            View Details
+            <svg
+              className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
     </Box>
-  </Paper>
-  </Link>
-
-  
-       <Link to="/expense">
-        
-            
-          
-      
-  <Paper
-    sx={{
-       height: "250px",
-      width: "380px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gridColumn: { xs: "1", md: "2" }, // Second column on medium screens
-      gridRow: { xs: "2", md: "1" }, // First row on medium screens
-    }}
-  >
-    <Typography variant="h4">Revenue</Typography>
-    <Box sx={{
-      border: '1px dashed grey',
-      position: 'absolute',
-      right: '90px',
-    }}>
-    <Receipt/>
-    </Box>
-  </Paper>
- </Link>
-  <Paper
-    sx={{
-      height: "250px",
-      width: "398px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gridColumn: { xs: "1", md: "1" }, // First column on medium screens
-      gridRow: { xs: "3", md: "2" }, // Second row on medium screens
-    }}
-  >
-    <Typography variant="h4">3</Typography>
-  </Paper>
-
-
-  <Paper
-    sx={{
-      height: "250px",
-      width: "380px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gridColumn: { xs: "1", md: "2" }, // Second column on medium screens
-      gridRow: { xs: "4", md: "2" }, // Second row on medium screens
-    }}
-  >
-    <Typography variant="h4">4</Typography>
-  </Paper>  
-</Box>
-      );
-
-  // return (
-  //   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-  //     <Link to="/income">
-  //       <div className="group bg-[#ffd9d1] rounded-lg p-8 transition-all hover:shadow-lg">
-  //         <div className="flex items-center justify-between mb-4">
-  //           <h2 className="text-2xl font-bold">INCOME OVERVIEW</h2>
-  //           <WalletCards className="h-6 w-6 text-gray-700 group-hover:scale-110 transition-transform" />
-  //         </div>
-  //       </div>
-  //     </Link>
-
-
-  //     <Link to="/report">
-  //       <div className="group bg-[#ffd9d1] rounded-lg p-8 transition-all hover:shadow-lg">
-  //         <div className="flex items-center justify-between mb-4">
-  //           <h2 className="text-2xl font-bold">REPORT</h2>
-  //           <FileText className="h-6 w-6 text-gray-700 group-hover:scale-110 transition-transform" />
-  //         </div>
-  //       </div>
-  //     </Link>
-
-  //     <Link to="/categories">
-  //       <div className="group bg-[#ffd9d1] rounded-lg p-8 transition-all hover:shadow-lg">
-  //         <div className="flex items-center justify-between mb-4">
-  //           <h2 className="text-2xl font-bold">CATEGORIES</h2>
-  //           <FolderKanban className="h-6 w-6 text-gray-700 group-hover:scale-110 transition-transform" />
-  //         </div>
-  //       </div>
-  //     </Link>
-  //   </div>
-  // )
+  );
 }
 
 export default Dashboard;
