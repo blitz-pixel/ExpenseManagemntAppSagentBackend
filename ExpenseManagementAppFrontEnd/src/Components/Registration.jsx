@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Auth.css"; // CSS for styling
+import { Link } from "react-router-dom";
+// import "./Auth.css"; // CSS for styling
 
 const Registration = () => {
     const [formData, setFormData] = useState({
@@ -28,7 +29,7 @@ const Registration = () => {
         <div className="auth-container">
             <form onSubmit={handleSubmit} className="auth-form">
                 <h2>Register</h2>
-                <label>Username:</label>
+                <label>Username:{" "}</label>
                 <input
                     type="text"
                     name="username"
@@ -36,7 +37,8 @@ const Registration = () => {
                     onChange={handleChange}
                     required
                 />
-                <label>Email:</label>
+                <br></br>
+                <label>Email: </label>
                 <input
                     type="email"
                     name="email"
@@ -44,7 +46,8 @@ const Registration = () => {
                     onChange={handleChange}
                     required
                 />
-                <label>Password:</label>
+                <br></br>
+                <label>Password: </label>
                 <input
                     type="password"
                     name="password"
@@ -52,8 +55,24 @@ const Registration = () => {
                     onChange={handleChange}
                     required
                 />
+                <br></br>
+                <label>Confirm Password: </label>
+                <input
+                    type="password"
+                    name="Cpassword"
+                    // value={formData.password}
+                    // onChange={handleChange}
+                    required
+                />
+                <br></br>
                 <button type="submit">Register</button>
             </form>
+            <p>
+                Aldready have an account ?{" "}
+                <Link to="/Login" style={{ marginLeft: "5px", textDecoration: "none" }}>
+                    Login
+                </Link>
+            </p>
         </div>
     );
 };

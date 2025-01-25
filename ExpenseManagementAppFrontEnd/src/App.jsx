@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import Registration from "./Components/Registration";
 import Login from "./Components/Login";
+import { Routes, Route, BrowserRouter as Router, Link } from "react-router-dom";
 import "./App.css";
+import Home from "./Components/Home";
+import Dashboard from "./Components/Dashboard";
 
 const App = () => {
-    const [isRegistering, setIsRegistering] = useState(true);
-
     return (
-        <div className="app-container">
-            <div className="toggle-buttons">
-                <button onClick={() => setIsRegistering(true)}>Register</button>
-                <button onClick={() => setIsRegistering(false)}>Login</button>
-            </div>
-            {isRegistering ? <Registration /> : <Login />}
+        <div className="App">
+            <Router>
+                <Routes>
+                    <Route path="/Registration" element={<Registration />} />
+                    <Route path="/Login" element={<Login />} />
+                    <Route path="/Dashboard" element={<Dashboard />} />
+                    <Route path="/" element={<Home/>} />
+                </Routes>
+            </Router>
         </div>
     );
 };
