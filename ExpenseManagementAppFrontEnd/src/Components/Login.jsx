@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Auth.css";
+import { Link } from "react-router-dom";
+// import "./Auth.css";
 
 const Login = () => {
     const [credentials, setCredentials] = useState({
@@ -35,7 +36,8 @@ const Login = () => {
                     onChange={handleChange}
                     required
                 />
-                <label>Password:</label>
+                <br></br>
+                <label>Password:  </label>
                 <input
                     type="password"
                     name="password"
@@ -43,8 +45,19 @@ const Login = () => {
                     onChange={handleChange}
                     required
                 />
+                <br></br>
                 <button type="submit">Login</button>
             </form>
+            <div>
+                <p>
+                Don't have an account?{" "}
+                <Link to="/Registration" style={{ marginLeft: "5px", textDecoration: "none" }}>
+                    Register
+                </Link>
+                </p>
+                <Link to="/" style={{ marginLeft: "5px", textDecoration: "none" }}>  Forgot Password? </Link>             
+            
+            </div>
         </div>
     );
 };
