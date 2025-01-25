@@ -5,22 +5,19 @@ import Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
+
     @Autowired
     private UserRepository userRepository;
 
-    public String login(User user) {
-        User existingUser = userRepository.findByEmail(user.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        if (existingUser.getPassword().equals(user.getPassword())) {
-            return "Login successful!";
-        } else {
-            throw new RuntimeException("Invalid password");
+    public boolean authenticateUser(User user) {
+        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
+        if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
+            return true;
         }
-    }
-
-    public User register(User user) {
-        return userRepository.save(user);
+        return false;
     }
 }
