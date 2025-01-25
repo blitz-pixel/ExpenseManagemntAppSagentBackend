@@ -17,7 +17,7 @@ import java.time.Instant;
 public class User {
     @Id
     @Column(name = "user_id", nullable = false)
-    private Long id;
+    private Long user_id;
 
     @Column(name = "user_name", nullable = false)
     private String userName;

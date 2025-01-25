@@ -16,12 +16,12 @@ import java.time.Instant;
 public class Account {
     @Id
     @Column(name = "account_id", nullable = false)
-    private Long id;
+    private Long account_id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id", nullable = false)
-    private Model.User user;
+    private Model.User User_Foriegn_id;
 
     @Column(name = "account_name", nullable = false)
     private String accountName;
