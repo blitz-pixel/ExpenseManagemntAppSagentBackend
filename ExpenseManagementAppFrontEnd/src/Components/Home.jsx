@@ -7,7 +7,7 @@ const Home = () => {
             <Link to="/Registration">
                 <button>Register</button>
             </Link>
-            <Link to="/login">
+            <Link to="/Login">
                 <button>Login</button>
             </Link>
         </nav>
