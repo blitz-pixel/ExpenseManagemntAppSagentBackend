@@ -13,11 +13,14 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public boolean authenticateUser(User user) {
-        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
-        if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
-            return true;
-        }
-        return false;
+    public void addUser(User user) {
+        userRepository.save(user);
     }
+
+    public User getUserByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.orElse(null);
+    }
+
 }
+
