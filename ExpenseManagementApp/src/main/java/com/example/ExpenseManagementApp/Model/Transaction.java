@@ -43,4 +43,10 @@ public class Transaction {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "t_name",nullable = false)
+    private String t_name;
+
 }
