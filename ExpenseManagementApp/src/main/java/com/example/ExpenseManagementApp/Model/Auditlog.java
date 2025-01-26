@@ -15,22 +15,23 @@ import java.time.Instant;
 @Table(name = "auditlogs")
 public class Auditlog {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "log_id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Useraccountaccess user;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "shared_account_id", nullable = false, referencedColumnName = "shared_account_id")
+    @JoinColumn(name = "shared_account_id", nullable = false)
     private Useraccountaccess sharedAccount;
 
-    @Lob
+    @Enumerated(EnumType.STRING)  // Store the enum as a string in the database
     @Column(name = "action", nullable = false)
-    private String action;
+    private ActionType action;
 
     @Column(name = "record_id", nullable = false)
     private Long recordId;
@@ -41,5 +42,9 @@ public class Auditlog {
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "access_time")
     private Instant accessTime;
+
+    public enum ActionType {
+        CREATE, UPDATE, DELETE
+    }
 
 }

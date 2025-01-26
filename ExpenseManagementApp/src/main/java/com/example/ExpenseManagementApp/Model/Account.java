@@ -15,6 +15,7 @@ import java.time.Instant;
 @Table(name = "account")
 public class Account {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id", nullable = false)
     private Long account_id;
 
@@ -26,20 +27,20 @@ public class Account {
     @Column(name = "account_name", nullable = false)
     private String accountName;
 
-    @Lob
+    @Enumerated(EnumType.STRING)  // Store the enum as a string in the database
     @Column(name = "type", nullable = false)
-    private String type;
+    private AccountType type;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
     private Instant createdAt;
 
 
-    public String getType() {
+    public AccountType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(AccountType type) {
         this.type = type;
     }
 
@@ -72,5 +73,9 @@ public class Account {
         this.createdAt = createdAt;
     }
 
+    public enum AccountType {
+        personal,
+        shared
+    }
 
 }

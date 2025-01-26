@@ -35,8 +35,13 @@ public class Budget {
     @Column(name = "budget_end_date", nullable = false)
     private LocalDate budgetEndDate;
 
-    @Lob
+    @Enumerated(EnumType.STRING)
     @Column(name = "budget_frequency", nullable = false)
-    private String budgetFrequency;
+    private Frequency budgetFrequency;
+
+    public enum Frequency {
+        MONTHLY,
+        YEARLY
+    }
 
 }
