@@ -1,4 +1,4 @@
 package com.example.ExpenseManagementApp.Services;
 
-public class TransactionService {
+public class RevenueRepository {
 }
