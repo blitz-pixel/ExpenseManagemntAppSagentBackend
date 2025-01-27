@@ -11,6 +11,10 @@ import lombok.extern.log4j.Log4j2;
 @Getter
 @Setter
 public class RegisterDTO {
+
+        @NotBlank(message = "User name is required")
+        private String userName;
+
         @Email(message = "Email should be valid")
         private String email;
 
@@ -29,8 +33,6 @@ public class RegisterDTO {
                 return email;
         }
 
-        @NotBlank(message = "User name is required")
-        private String userName;
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.ExpenseManagementApp.Services;
 
+import com.example.ExpenseManagementApp.DTO.LoginDTO;
 import com.example.ExpenseManagementApp.Model.User;
 import com.example.ExpenseManagementApp.Repositories.UserRepository;
 import jakarta.transaction.Transactional;
@@ -25,9 +26,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getUserByEmail(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        return user.orElse(null);
+    public User getUserByEmail(LoginDTO loginDTO) {
+        String email = loginDTO.getEmail();
+        String password = loginDTO.getPassword();
+        return userRepository.findByEmail(email,password).orElse(null);
     }
 
 }

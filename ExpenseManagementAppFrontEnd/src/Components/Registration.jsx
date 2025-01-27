@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Registration = () => {
     const [formData, setFormData] = useState({
-        username: "",
+        userName: "",
         email: "",
         password: "",
     });
@@ -17,10 +17,12 @@ const Registration = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8080/api/register", formData);
+            const response = await axios.post("http://localhost:8080/api/v1/Registration", formData);
+            console.log(formData)
             alert(response.data.message);
         } catch (error) {
             console.error("Error during registration:", error);
+            console.log(formData)
             alert("Registration failed.");
         }
     };
@@ -32,8 +34,8 @@ const Registration = () => {
                 <label>Username:{" "}</label>
                 <input
                     type="text"
-                    name="username"
-                    value={formData.username}
+                    name="userName"
+                    value={formData.userName}
                     onChange={handleChange}
                     required
                 />

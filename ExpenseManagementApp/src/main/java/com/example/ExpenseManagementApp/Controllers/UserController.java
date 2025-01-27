@@ -8,36 +8,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.logging.Logger;
+
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
     @Autowired
     private UserService userService;
 
+
     @PostMapping("/Login")
-    public ResponseEntity<User> login(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
+        Logger logger = Logger.getLogger(UserController.class.getName()); // Create a logger instance
+
         try {
-            User user = userService.getUserByEmail(loginDTO.getEmail());
+            // Look up the user by email
+            User user = userService.getUserByEmail(loginDTO);
+
             if (user == null) {
-                return ResponseEntity.badRequest().build();
+                // Log and return error if user is not found
+                logger.warning("Login failed: User with email " + loginDTO.getEmail() + " not found.");
+                return ResponseEntity.badRequest().body("User not found");
             }
+
+            // Check if password matches
             if (user.getPassword().equals(loginDTO.getPassword())) {
-                return ResponseEntity.ok(user);
+                // Log successful login
+                logger.info("Login successful: User with email " + loginDTO.getEmail() + " logged in.");
+                return ResponseEntity.ok("Login successful");
             } else {
-                return ResponseEntity.badRequest().build();
+                // Log failed login attempt due to incorrect password
+                logger.warning("Login failed: Incorrect password for user with email " + loginDTO.getEmail());
+                return ResponseEntity.badRequest().body("Password not equal");
             }
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            // Log the exception
+            logger.severe("Login failed due to an error: " + e.getMessage());
+            return ResponseEntity.badRequest().body("Error");
         }
     }
+
 
     @PostMapping("/Registration")
     public ResponseEntity<User> register(@RequestBody RegisterDTO registerDTO) {
         try {
             User user = new User();
+            user.setUserName(registerDTO.getUserName());
             user.setEmail(registerDTO.getEmail());
             user.setPassword(registerDTO.getPassword());
-            user.setUserName(registerDTO.getUserName());
             userService.addUser(user);
             return ResponseEntity.ok(user);
         } catch (Exception e) {
