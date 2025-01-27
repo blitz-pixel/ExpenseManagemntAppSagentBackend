@@ -12,8 +12,8 @@ public class UserTest {
         user.setUserName("John Doe");
         user.setEmail("John123@gmail.com");
         user.setPassword("123456");
-        user.setCreatedAt(Instant.now());
-        user.setUser_id(1L);
+//        user.setCreatedAt(Instant.now());
+//        user.setUser_id(1L);
         return user;
     }
 }

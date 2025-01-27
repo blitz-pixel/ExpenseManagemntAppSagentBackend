@@ -3,14 +3,13 @@ package com.example.ExpenseManagementApp.Model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "user") // Match this with your database table
+@Table(name = "users") // Match this with your database table
 public class User {
 
     @Id
@@ -28,9 +27,14 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "created_at")
+
+    @Column(name = "created_at",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP",insertable = false )
     private Instant createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = Instant.now();
+    }
 
 
     public void setUser_id(Long user_id) {

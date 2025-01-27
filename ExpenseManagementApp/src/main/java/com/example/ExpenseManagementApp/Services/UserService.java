@@ -2,6 +2,7 @@ package com.example.ExpenseManagementApp.Services;
 
 import com.example.ExpenseManagementApp.Model.User;
 import com.example.ExpenseManagementApp.Repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class UserService {
     }
 
     // For testing
+    @Transactional
     public User addUser(User user) {
         return userRepository.save(user);
     }

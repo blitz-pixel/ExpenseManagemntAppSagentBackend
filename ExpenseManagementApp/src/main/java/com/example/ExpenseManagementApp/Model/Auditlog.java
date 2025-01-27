@@ -39,8 +39,8 @@ public class Auditlog {
     @Column(name = "table_name", nullable = false)
     private String tableName;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "access_time")
+
+    @Column(name = "access_time",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP" )
     private Instant accessTime;
 
     public enum ActionType {

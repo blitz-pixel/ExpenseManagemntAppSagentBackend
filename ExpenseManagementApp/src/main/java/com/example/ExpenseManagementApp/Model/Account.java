@@ -31,8 +31,8 @@ public class Account {
     @Column(name = "type", nullable = false)
     private AccountType type;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "created_at")
+
+    @Column(name = "created_at",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP" )
     private Instant createdAt;
 
 
