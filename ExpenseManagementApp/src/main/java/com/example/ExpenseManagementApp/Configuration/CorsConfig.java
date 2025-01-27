@@ -9,20 +9,35 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsConfig {
+
+    // CORS Configuration
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedHeaders("http://localhost:3000")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedOrigins("*")
-                        .allowCredentials(true);
+                        .allowedOrigins("http://localhost:3000") // Allow requests from this origin
+                        .allowedMethods("GET", "POST", "PUT", "DELETE") // Allow these HTTP methods
+                        .allowedHeaders("*") // Allow all headers
+                        .allowCredentials(true); // Allow credentials (e.g., cookies)
             }
         };
     }
+
+    // Security Configuration
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/**").permitAll() // Allow all requests
+                        .anyRequest().permitAll()) // Allow all other requests as well
+                .csrf(csrf -> csrf.disable()); // Disable CSRF protection
+
+        return http.build();
+    }
 }
+
 
 //package com.example.SampleLoginApplication.Configurations;
 //
