@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 // import "./Auth.css";
 
 const Login = () => {
@@ -9,6 +9,8 @@ const Login = () => {
         password: "",
     });
 
+    const [redirect, setRedirect] = useState(false);
+
     const handleChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
@@ -16,13 +18,24 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8080/api/login", credentials);
+            const response = await axios.post("http://localhost:8080/api/v1/Login", credentials);
+            console.log(response.data);
+            if (response.status === 200){
+                console.log("Login successful");
+                setRedirect(true)
+
+            }
             alert(response.data.message);
         } catch (error) {
             console.error("Error during login:", error);
+            console.log(credentials);
             alert("Login failed.");
         }
     };
+
+    if (redirect) {
+       return  <Navigate to="/Account" />
+    }
 
     return (
         <div className="auth-container">
@@ -50,7 +63,7 @@ const Login = () => {
             </form>
             <div>
                 <p>
-                Don't have an account?{" "}
+                Don&#39;t have an account?{" "}
                 <Link to="/Registration" style={{ marginLeft: "5px", textDecoration: "none" }}>
                     Register
                 </Link>
