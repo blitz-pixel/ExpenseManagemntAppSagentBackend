@@ -17,20 +17,17 @@ public class Category {
     @Column(name = "category_id", nullable = false)
     private Long id;
 
-    @Lob
+    @Enumerated(EnumType.STRING)
     @Column(name = "scope", nullable = false)
-    private String scope;
+    private Scope scope; // Enum type for 'USER' and 'ACCOUNT'
 
-    @Any()
-    @AnyKeyJavaClass(Long.class)
-    @Column(name = "scope_id")
-    @AnyDiscriminatorValue(discriminator = "user", entity = User.class)
-    @AnyDiscriminatorValue(discriminator = "account", entity = Account.class)
-    @JoinColumn(name = "scope_id")
-    private Object scope_id;
-    @Lob
+
+    @Column(name = "scope_id", nullable = false)
+    private Long scope_id;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
-    private String type;
+    private CatType type;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -38,34 +35,34 @@ public class Category {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "parent_id")
-    private Category parent;  // Self-referencing relationship
+    private Category parent;  // Self-referencing relationsh
 
 
     public Long getId() {
         return id;
     }
 
-    public String getScope() {
+    public Scope getScope() {
         return scope;
     }
 
-    public void setScope(String scope) {
+    public void setScope(Scope scope) {
         this.scope = scope;
     }
 
-    public Object getScope_id() {
+    public Long getScope_id() {
         return scope_id;
     }
 
-    public void setScope_id(Object scope_id) {
+    public void setScope_id(Long scope_id) {
         this.scope_id = scope_id;
     }
 
-    public String getType() {
+    public CatType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(CatType type) {
         this.type = type;
     }
 
@@ -79,6 +76,15 @@ public class Category {
 
     public Category getParent() {
         return parent;
+    }
+
+    public enum Scope {
+        USER,
+        ACCOUNT
+    }
+
+    public enum CatType {
+        income,expense
     }
 
 

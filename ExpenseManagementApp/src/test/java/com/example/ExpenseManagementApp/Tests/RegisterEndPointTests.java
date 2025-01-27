@@ -16,12 +16,11 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Transactional
 @Testcontainers
 public class RegisterEndPointTests {
 
     @Container
-    static MySQLContainer<?> mySQLContainer = new MySQLContainer<>("mysql:8.0")
+     static MySQLContainer<?> mySQLContainer = new MySQLContainer<>("mysql:8.0")
             .withDatabaseName("examplemanagementappdb")
             .withUsername("root")
             .withPassword("1234");
@@ -45,7 +44,13 @@ public class RegisterEndPointTests {
 
     @Test
     public void testThatUserIsRegistered() {
-        User savedUser = userService.addUser(userTest.testUserDetails());
+        User user = userTest.testUserDetails();
+        System.out.println("User before save: " + user);
+
+        User savedUser = userRepository.save(user);
+        System.out.println("User after save: " + savedUser);
+
+        userRepository.flush();
 
         assertAll(
                 () -> assertNotNull(savedUser, "User should be saved"),

@@ -31,9 +31,9 @@ public class Recurringtransaction {
     @Column(name = "amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
 
-    @Lob
+    @Enumerated(EnumType.STRING)
     @Column(name = "frequency", nullable = false)
-    private String frequency;
+    private RFrequency frequency;
 
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
@@ -44,5 +44,12 @@ public class Recurringtransaction {
     @ColumnDefault("1")
     @Column(name = "is_active")
     private Boolean isActive;
+
+    private enum RFrequency {
+        DAILY,
+        WEEKLY,
+        MONTHLY,
+        YEARLY
+    }
 
 }

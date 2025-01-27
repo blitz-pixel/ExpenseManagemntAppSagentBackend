@@ -12,27 +12,38 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "useraccountaccess")
 public class Useraccountaccess {
-    @EmbeddedId
-    private UseraccountaccessId id;
+//    @EmbeddedId
+//    private UseraccountaccessId id;
 
-    @MapsId("userId")
+    @Id
+    @Column(name = "shared_account_id", nullable = false)
+    private Long shared_account_id;
+
+
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @MapsId("sharedAccountId")
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "shared_account_id", nullable = false)
-    private Account sharedAccount;
+    @JoinColumn(name = "Account_id", nullable = false)
+    private Account Account;
 
     @ColumnDefault("'ADMIN'")
-    @Lob
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private String role;
+    private Rolee role;
 
     @Column(name = "created_by", nullable = false)
     private Long createdBy;
+
+    private enum Rolee {
+        ADMIN,
+        USER,
+        VIEWER
+    }
 
 }

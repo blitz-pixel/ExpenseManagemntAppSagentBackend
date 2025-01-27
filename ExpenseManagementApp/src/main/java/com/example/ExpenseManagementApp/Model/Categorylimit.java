@@ -37,8 +37,8 @@ public class Categorylimit {
     @Column(name = "limit_end_date", nullable = false)
     private LocalDate limitEndDate;
 
-    @Lob
+    @Enumerated(EnumType.STRING)
     @Column(name = "limit_frequency", nullable = false)
-    private String limitFrequency;
+    private Budget.Frequency limitFrequency;
 
 }

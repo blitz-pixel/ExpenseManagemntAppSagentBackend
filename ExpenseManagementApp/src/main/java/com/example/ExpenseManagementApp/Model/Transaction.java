@@ -26,9 +26,15 @@ public class Transaction {
     @Column(name = "date", nullable = false)
     private Instant date;
 
-    @Lob
+    @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
-    private String type;
+    private Category.CatType type;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "t_name",nullable = false)
+    private String t_name;
 
     @Column(name = "amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
@@ -37,10 +43,5 @@ public class Transaction {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "t_name",nullable = false)
-    private String t_name;
 
 }
