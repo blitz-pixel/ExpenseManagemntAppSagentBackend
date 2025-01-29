@@ -19,7 +19,9 @@ const Registration = () => {
         try {
             const response = await axios.post("http://localhost:8080/api/v1/Registration", formData);
             console.log(formData)
-            alert(response.data.message);
+            console.log(response);
+            alert("User register successfully");
+
         } catch (error) {
             console.error("Error during registration:", error);
             console.log(formData)

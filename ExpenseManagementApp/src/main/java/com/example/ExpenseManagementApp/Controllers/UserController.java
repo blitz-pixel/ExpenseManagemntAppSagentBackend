@@ -1,5 +1,6 @@
 package com.example.ExpenseManagementApp.Controllers;
 
+import com.example.ExpenseManagementApp.Configuration.JwtUtil;
 import com.example.ExpenseManagementApp.DTO.LoginDTO;
 import com.example.ExpenseManagementApp.DTO.RegisterDTO;
 import com.example.ExpenseManagementApp.Model.User;
@@ -16,6 +17,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
 
     @PostMapping("/Login")
     public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
@@ -24,6 +28,7 @@ public class UserController {
         try {
             // Look up the user by email
             User user = userService.getUserByEmail(loginDTO);
+            String user_name = user.getUserName();
 
             if (user == null) {
                 // Log and return error if user is not found
@@ -35,6 +40,8 @@ public class UserController {
             if (user.getPassword().equals(loginDTO.getPassword())) {
                 // Log successful login
                 logger.info("Login successful: User with email " + loginDTO.getEmail() + " logged in.");
+                logger.info(jwtUtil.generateToken(user_name));
+
                 return ResponseEntity.ok("Login successful");
             } else {
                 // Log failed login attempt due to incorrect password

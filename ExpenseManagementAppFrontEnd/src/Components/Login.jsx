@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import axios from "axios";
 import {Link, Navigate} from "react-router-dom";
 // import "./Auth.css";
@@ -25,7 +25,9 @@ const Login = () => {
                 setRedirect(true)
 
             }
-            alert(response.data.message);
+            console.log(response.data);
+            console.log(response)
+            alert("Logine successfully");
         } catch (error) {
             console.error("Error during login:", error);
             console.log(credentials);
@@ -34,7 +36,7 @@ const Login = () => {
     };
 
     if (redirect) {
-       return  <Navigate to="/Account" />
+       return  <Navigate to="/Account" state={{"email" : credentials.email}} />
     }
 
     return (

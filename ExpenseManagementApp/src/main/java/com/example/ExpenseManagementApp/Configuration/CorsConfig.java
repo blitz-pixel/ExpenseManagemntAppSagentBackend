@@ -2,8 +2,17 @@ package com.example.ExpenseManagementApp.Configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -25,18 +34,68 @@ public class CorsConfig {
         };
     }
 
-    // Security Configuration
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/**").permitAll() // Allow all requests
-                        .anyRequest().permitAll()) // Allow all other requests as well
-                .csrf(csrf -> csrf.disable()); // Disable CSRF protection
+    // Security Configuration for testing
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//                .authorizeHttpRequests(authz -> authz
+//                        .requestMatchers("/**").permitAll()
+//                        .anyRequest().permitAll()) // Allow all other requests as well
+//                .csrf(AbstractHttpConfigurer::disable); // Disable CSRF protection
+//
+//        return http.build();
+//    }
 
-        return http.build();
+    private final JwFilter jwFilter;
+
+    public CorsConfig(JwFilter jwFilter) {
+        this.jwFilter = jwFilter;
     }
+
+    @Bean
+    public SecurityFilterChain ecurityFilterChain(HttpSecurity http, JwFilter jwtFilter) throws Exception {
+        return http
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/v1/Login").permitAll()
+                        .anyRequest().authenticated())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/v1/Login")) // Ignore CSRF only for login
+                .build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+//
+//        public SecurityConfig(UserDetailsService userDetailsService) {
+//            this.userDetailsService = userDetailsService;
+//        }
+//
+//        // Exposing AuthenticationManager as a Bean
+//        @Bean
+//        public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+//            return config.getAuthenticationManager();
+//        }
+//
+//        // Define Password Encoder Bean
+//        @Bean
+//        public PasswordEncoder passwordEncoder() {
+//            return new BCryptPasswordEncoder();
+//        }
+
+    // You can also override HttpSecurity configurations here if needed
+
 }
+
+
 
 
 //package com.example.SampleLoginApplication.Configurations;
