@@ -5,6 +5,8 @@ import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
 import Home from "./Components/Home";
 import Dashboard from "./Components/Dashboard";
+import Expense from "./Components/Expense"
+import Revenue from "./Components/Revenue"
 
 const App = () => {
     return (
@@ -14,6 +16,8 @@ const App = () => {
                     <Route path="/Registration" element={<Registration />} />
                     <Route path="/Login" element={<Login />} />
                     <Route path="/Dashboard" element={<Dashboard />} />
+                    <Route path="/Expense" element={<Expense/>}/>
+                    <Route path="/Revenue" element={<Revenue/>}/>
                     <Route path="/" element={<Home/>} />
                 </Routes>
             </Router>
