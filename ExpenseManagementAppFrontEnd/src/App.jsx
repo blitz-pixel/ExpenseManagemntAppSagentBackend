@@ -7,10 +7,12 @@ import Home from "./Components/Home";
 import Dashboard from "./Components/Dashboard";
 import Expense from "./Components/Expense"
 import Revenue from "./Components/Revenue"
+// import Navbar from "./Components/Navbar"
 
 const App = () => {
     return (
         <div className="App">
+            {/* <Navbar/> */}
             <Router>
                 <Routes>
                     <Route path="/Registration" element={<Registration />} />

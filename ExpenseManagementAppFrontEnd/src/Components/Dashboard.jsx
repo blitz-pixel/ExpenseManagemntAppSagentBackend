@@ -1,174 +1,164 @@
 import { WalletCards, Receipt } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Grid2, Box, Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography, Button } from "@mui/material";
 
 function Dashboard() {
   return (
     <Box
       sx={{
         display: "grid",
-        position: "relative",
-        // border: "1px dashed grey",
-        justifyContent: "center",
         gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
-        gridTemplateRows: { xs: "auto", md: "200px 200px" },
-        // rowGap: "70px",
-        // columnGap: "20px",
-        width: "800px",
-        height: "520px",
+        gap: 3,
+        justifyContent: "center",
+        padding: 3,
+        height: "100%",
       }}
     >
-      <Link to="/income">
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-          <a href="#">
-            <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
-          </a>
-          <div className="p-5">
-            <a href="#">
-              <Typography variant="h5" className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+      <Grid container spacing={3}>
+        {/* Income Overview Card */}
+        <Grid item xs={12} sm={6}>
+          <Link to="/income" style={{ textDecoration: "none" }}>
+            <Paper
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                padding: 2,
+                boxShadow: 3,
+                borderRadius: 2,
+                backgroundColor: "white",
+              }}
+            >
+              <img
+                src="/docs/images/blog/image-1.jpg"
+                alt="Income Overview"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  borderRadius: "8px",
+                  marginBottom: "16px",
+                }}
+              />
+              <Typography variant="h5" sx={{ fontWeight: "bold", marginBottom: 2 }}>
                 Income Overview
               </Typography>
-            </a>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-              Manage and track all your income streams here.
-            </p>
-            <a
-              href="#"
-              className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              View Details
-              <svg
-                className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 10"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M1 5h12m0 0L9 1m4 4L9 9"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </Link>
+              <Typography sx={{ marginBottom: 2 }}>
+                Manage and track all your income streams here.
+              </Typography>
+              <Button variant="contained" color="primary" sx={{ padding: "8px 20px" }}>
+                View Details
+              </Button>
+            </Paper>
+          </Link>
+        </Grid>
 
-      <Link to="/expense">
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-          <a href="#">
-            <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
-          </a>
-          <div className="p-5">
-            <a href="#">
-              <Typography variant="h5" className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        {/* Expense Overview Card */}
+        <Grid item xs={12} sm={6}>
+          <Link to="/expense" style={{ textDecoration: "none" }}>
+            <Paper
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                padding: 2,
+                boxShadow: 3,
+                borderRadius: 2,
+                backgroundColor: "white",
+              }}
+            >
+              <img
+                src="/docs/images/blog/image-1.jpg"
+                alt="Expense Overview"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  borderRadius: "8px",
+                  marginBottom: "16px",
+                }}
+              />
+              <Typography variant="h5" sx={{ fontWeight: "bold", marginBottom: 2 }}>
                 Expense Overview
               </Typography>
-            </a>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-              Keep track of your expenses and manage your budgets.
-            </p>
-            <a
-              href="#"
-              className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              View Details
-              <svg
-                className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 10"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M1 5h12m0 0L9 1m4 4L9 9"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </Link>
+              <Typography sx={{ marginBottom: 2 }}>
+                Keep track of your expenses and manage your budgets.
+              </Typography>
+              <Button variant="contained" color="primary" sx={{ padding: "8px 20px" }}>
+                View Details
+              </Button>
+            </Paper>
+          </Link>
+        </Grid>
 
-      <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-        <a href="#">
-          <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
-        </a>
-        <div className="p-5">
-          <a href="#">
-            <Typography variant="h5" className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        {/* Report Card */}
+        <Grid item xs={12} sm={6}>
+          <Paper
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: 2,
+              boxShadow: 3,
+              borderRadius: 2,
+              backgroundColor: "white",
+            }}
+          >
+            <img
+              src="/docs/images/blog/image-1.jpg"
+              alt="ReportImg"
+              style={{
+                width: "100%",
+                height: "auto",
+                borderRadius: "8px",
+                marginBottom: "16px",
+              }}
+            />
+            <Typography variant="h5" sx={{ fontWeight: "bold", marginBottom: 2 }}>
               Report
             </Typography>
-          </a>
-          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            Get transaction report here
-          </p>
-          <a
-            href="#"
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            View Details
-            <svg
-              className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 10"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 5h12m0 0L9 1m4 4L9 9"
-              />
-            </svg>
-          </a>
-        </div>
-      </div>
+            <Typography sx={{ marginBottom: 2 }}>
+              Get transaction report here.
+            </Typography>
+            <Button variant="contained" color="primary" sx={{ padding: "8px 20px" }}>
+              View Details
+            </Button>
+          </Paper>
+        </Grid>
 
-      <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-        <a href="#">
-          <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
-        </a>
-        <div className="p-5">
-          <a href="#">
-            <Typography variant="h5" className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        {/* Recent Transactions Card */}
+        <Grid item xs={12} sm={6}>
+          <Paper
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: 2,
+              boxShadow: 3,
+              borderRadius: 2,
+              backgroundColor: "white",
+            }}
+          >
+            <img
+              src="/docs/images/blog/image-1.jpg"
+              alt="Recent Transactions"
+              style={{
+                width: "100%",
+                height: "auto",
+                borderRadius: "8px",
+                marginBottom: "16px",
+              }}
+            />
+            <Typography variant="h5" sx={{ fontWeight: "bold", marginBottom: 2 }}>
               Recent Transactions
             </Typography>
-          </a>
-          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            View most recent Transactions here
-          </p>
-          <a
-            href="#"
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            View Details
-            <svg
-              className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 10"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 5h12m0 0L9 1m4 4L9 9"
-              />
-            </svg>
-          </a>
-        </div>
-      </div>
+            <Typography sx={{ marginBottom: 2 }}>
+              View most recent Transactions here.
+            </Typography>
+            <Button variant="contained" color="primary" sx={{ padding: "8px 20px" }}>
+              View Details
+            </Button>
+          </Paper>
+        </Grid>
+      </Grid>
     </Box>
   );
 }

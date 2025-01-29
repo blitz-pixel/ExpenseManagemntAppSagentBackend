@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button, TextField, Modal, Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 
 const RevenuePage = () => {
     const [revenues, setRevenues] = useState([]);
@@ -27,69 +28,123 @@ const RevenuePage = () => {
         <div style={{ padding: "20px", maxWidth: "900px", margin: "auto" }}>
             {/* Header Section with Proper Alignment */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <h2 style={{ margin: "0", fontSize: "24px" }}>Revenue Tracker</h2>
-                <button
-                    onClick={() => setShowModal(true)}
-                    style={{
-                        padding: "8px 15px",
-                        fontSize: "16px",
-                        cursor: "pointer",
-                    }}
-                >
-                    Add Revenue
-                </button>
+                <Typography variant="h4" gutterBottom>Revenue Tracker</Typography>
+                <Button variant="contained" color="primary" onClick={() => setShowModal(true)}>Add Revenue</Button>
             </div>
 
             {/* Revenue Table */}
             {revenues.length > 0 && (
-                <table border="1" cellPadding="10" style={{ width: "100%", borderCollapse: "collapse", marginTop: "20px" }}>
-                    <thead>
-                    <tr>
-                        <th>S.No</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Sub-Category</th>
-                        <th>Amount</th>
-                        <th>Date Added</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {revenues.map((revenue) => (
-                        <tr key={revenue.id}>
-                            <td>{revenue.serialNo}</td>
-                            <td>{revenue.name}</td>
-                            <td>{revenue.category}</td>
-                            <td>{revenue.subCategory}</td>
-                            <td>{revenue.amount}</td>
-                            <td>{revenue.date}</td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
+                <TableContainer component={Paper} style={{ marginTop: "20px" }}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>S.No</TableCell>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Category</TableCell>
+                                <TableCell>Sub-Category</TableCell>
+                                <TableCell>Amount</TableCell>
+                                <TableCell>Date Added</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {revenues.map((revenue) => (
+                                <TableRow key={revenue.id}>
+                                    <TableCell>{revenue.serialNo}</TableCell>
+                                    <TableCell>{revenue.name}</TableCell>
+                                    <TableCell>{revenue.category}</TableCell>
+                                    <TableCell>{revenue.subCategory}</TableCell>
+                                    <TableCell>{revenue.amount}</TableCell>
+                                    <TableCell>{revenue.date}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             )}
 
             {/* Popup Modal */}
-            {showModal && (
-                <div style={{
-                    position: "fixed", top: "0", left: "0", width: "100%", height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.5)", display: "flex", justifyContent: "center", alignItems: "center"
+            <Modal
+                open={showModal}
+                onClose={() => setShowModal(false)}
+                aria-labelledby="add-revenue-modal"
+                aria-describedby="form-to-add-new-revenue"
+            >
+                <Box sx={{ 
+                    width: 400, 
+                    bgcolor: "white", 
+                    borderRadius: "8px", 
+                    p: 3, 
+                    position: "absolute", 
+                    top: "50%", 
+                    left: "50%", 
+                    transform: "translate(-50%, -50%)", 
+                    boxShadow: 24 
                 }}>
-                    <div style={{
-                        background: "#fff", padding: "20px", borderRadius: "8px", width: "350px",
-                        boxShadow: "0px 0px 10px rgba(0,0,0,0.2)"
-                    }}>
-                        <h3 style={{ marginBottom: "15px" }}>Add Revenue</h3>
-                        <label>Name: <input type="text" value={newRevenue.name} onChange={(e) => handleChange("name", e.target.value)} /></label><br /><br />
-                        <label>Category: <input type="text" value={newRevenue.category} onChange={(e) => handleChange("category", e.target.value)} /></label><br /><br />
-                        <label>Sub-Category: <input type="text" value={newRevenue.subCategory} onChange={(e) => handleChange("subCategory", e.target.value)} /></label><br /><br />
-                        <label>Amount: <input type="number" value={newRevenue.amount} onChange={(e) => handleChange("amount", e.target.value)} /></label><br /><br />
-                        <label>Date: <input type="date" value={newRevenue.date} onChange={(e) => handleChange("date", e.target.value)} /></label><br /><br />
-
-                        <button onClick={handleAddRevenue} style={{ marginRight: "10px", padding: "5px 10px" }}>Save</button>
-                        <button onClick={() => setShowModal(false)} style={{ padding: "5px 10px" }}>Cancel</button>
+                    <Typography variant="h6" gutterBottom>Add Revenue</Typography>
+                    <TextField
+                        label="Name"
+                        variant="outlined"
+                        fullWidth
+                        value={newRevenue.name}
+                        onChange={(e) => handleChange("name", e.target.value)}
+                        sx={{ mb: 2 }}
+                    />
+                    <TextField
+                        label="Category"
+                        variant="outlined"
+                        fullWidth
+                        value={newRevenue.category}
+                        onChange={(e) => handleChange("category", e.target.value)}
+                        sx={{ mb: 2 }}
+                    />
+                    <TextField
+                        label="Sub-Category"
+                        variant="outlined"
+                        fullWidth
+                        value={newRevenue.subCategory}
+                        onChange={(e) => handleChange("subCategory", e.target.value)}
+                        sx={{ mb: 2 }}
+                    />
+                    <TextField
+                        label="Amount"
+                        variant="outlined"
+                        fullWidth
+                        type="number"
+                        value={newRevenue.amount}
+                        onChange={(e) => handleChange("amount", e.target.value)}
+                        sx={{ mb: 2 }}
+                    />
+                    <TextField
+                        label="Date"
+                        variant="outlined"
+                        fullWidth
+                        type="date"
+                        value={newRevenue.date}
+                        onChange={(e) => handleChange("date", e.target.value)}
+                        sx={{ mb: 2 }}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                    <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleAddRevenue}
+                            sx={{ mr: 1 }}
+                        >
+                            Save
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={() => setShowModal(false)}
+                        >
+                            Cancel
+                        </Button>
                     </div>
-                </div>
-            )}
+                </Box>
+            </Modal>
         </div>
     );
 };
