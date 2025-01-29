@@ -1,9 +1,19 @@
-import {useLocation} from "react-router-dom";
+import {Navigate, useLocation} from "react-router-dom";
 
 function Account () {
     const location = useLocation();
     const data = location.state || {};
     console.log(data.email);
+    const key = localStorage.getItem("token") || null;
+    console.log(key)
+
+    if (!key) {
+        return <Navigate to="/Login" />;
+    }
+
+    // if (key){
+    //
+    // }
 
     return (
         <div>

@@ -19,15 +19,18 @@ const Login = () => {
         e.preventDefault();
         try {
             const response = await axios.post("http://localhost:8080/api/v1/Login", credentials);
-            console.log(response.data);
+            // console.log(response.data);
+            console.log("Token:", response.data);
             if (response.status === 200){
                 console.log("Login successful");
                 setRedirect(true)
+                localStorage.setItem("token", response.data);
+                // localStorage.setItem("name", credentials.email);
 
             }
             console.log(response.data);
             console.log(response)
-            alert("Logine successfully");
+            // alert("Logine successfully");
         } catch (error) {
             console.error("Error during login:", error);
             console.log(credentials);
