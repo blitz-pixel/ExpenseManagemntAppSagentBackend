@@ -29,6 +29,7 @@ public class CorsConfig {
                         .allowedOrigins("http://localhost:5173") // Allow requests from this origin
                         .allowedMethods("GET", "POST", "PUT", "DELETE") // Allow these HTTP methods
                         .allowedHeaders("*") // Allow all headers
+                        .exposedHeaders("*")
                         .allowCredentials(true); // Allow credentials (e.g., cookies)
             }
         };

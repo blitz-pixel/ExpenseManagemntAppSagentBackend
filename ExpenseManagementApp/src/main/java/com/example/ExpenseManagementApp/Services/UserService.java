@@ -3,6 +3,7 @@ package com.example.ExpenseManagementApp.Services;
 import com.example.ExpenseManagementApp.Configuration.JwtUtil;
 import com.example.ExpenseManagementApp.DTO.LoginDTO;
 import com.example.ExpenseManagementApp.DTO.RegisterDTO;
+import com.example.ExpenseManagementApp.Model.Account;
 import com.example.ExpenseManagementApp.Model.User;
 import com.example.ExpenseManagementApp.Repositories.UserRepository;
 import jakarta.transaction.Transactional;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -33,15 +35,37 @@ public class UserService implements UserDetailsService {
 //        return userRepository.save(user);
 //    }
 
-    public void addUser(RegisterDTO registerDTO) {
+    public void addUserPersonal(RegisterDTO registerDTO) {
         User user = new User();
+        Account account = new Account();
         user.setUserName(registerDTO.getUserName());
         user.setEmail(registerDTO.getEmail());
         user.setPassword(registerDTO.getPassword());
+//        if (Objects.equals(registerDTO.getEmail(), userRepository.findByEmail(registerDTO.getEmail()).get().getEmail())) {
+//            throw new IllegalArgumentException("Email already exists");
+//        }
+        account.setAccountName(registerDTO.getUserName());
+        account.setType(Account.AccountType.personal);
+        account.setUser_Foriegn_id(user);
+
+
+
         userRepository.save(user);
     }
 
+    public String getUserID(LoginDTO loginDTO){
+        Optional<User> userOptional = userRepository.findByEmailAndPassword(loginDTO.getEmail(), loginDTO.getPassword());
+        if (userOptional.isEmpty()) {
+            throw new UsernameNotFoundException("User not found with email: " + loginDTO.getEmail());
+        }
+
+        User user = userOptional.get();
+
+        return user.getUserName();
+    }
+
     public String authenticateUser(LoginDTO loginDTO) {
+        //*
         Optional<User> userOptional = userRepository.findByEmailAndPassword(loginDTO.getEmail(), loginDTO.getPassword());
 
         if (userOptional.isEmpty()) {
