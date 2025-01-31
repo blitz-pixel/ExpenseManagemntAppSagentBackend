@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-//import "./Auth.css"; // CSS for styling
+
 
 const Registration = () => {
     const [formData, setFormData] = useState({
-        username: "",
+        userName: "",
         email: "",
         password: "",
     });
@@ -17,10 +17,14 @@ const Registration = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8080/api/register", formData);
-            alert(response.data.message);
+            const response = await axios.post("http://localhost:8080/api/v1/Registration", formData);
+            console.log(formData)
+            console.log(response);
+            alert("User register successfully");
+
         } catch (error) {
             console.error("Error during registration:", error);
+            console.log(formData)
             alert("Registration failed.");
         }
     };
@@ -32,8 +36,8 @@ const Registration = () => {
                 <label>Username:{" "}</label>
                 <input
                     type="text"
-                    name="username"
-                    value={formData.username}
+                    name="userName"
+                    value={formData.userName}
                     onChange={handleChange}
                     required
                 />
