@@ -26,7 +26,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:5173") // Allow requests from this origin
+                        .allowedOrigins("http://localhost:8080") // Allow requests from this origin
                         .allowedMethods("GET", "POST", "PUT", "DELETE") // Allow these HTTP methods
                         .allowedHeaders("*") // Allow all headers
                         .exposedHeaders("*")
@@ -36,16 +36,16 @@ public class CorsConfig {
     }
 
     // Security Configuration for testing
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeHttpRequests(authz -> authz
-//                        .requestMatchers("/**").permitAll()
-//                        .anyRequest().permitAll()) // Allow all other requests as well
-//                .csrf(AbstractHttpConfigurer::disable); // Disable CSRF protection
-//
-//        return http.build();
-//    }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/**").permitAll()
+                        .anyRequest().permitAll()) // Allow all other requests as well
+                .csrf(AbstractHttpConfigurer::disable); // Disable CSRF protection
+
+        return http.build();
+    }
 
     private final JwFilter jwFilter;
 
@@ -53,17 +53,17 @@ public class CorsConfig {
         this.jwFilter = jwFilter;
     }
 
-    @Bean
-    public SecurityFilterChain ecurityFilterChain(HttpSecurity http, JwFilter jwtFilter) throws Exception {
-        return http
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/Login").permitAll()
-                        .anyRequest().authenticated())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/v1/Login")) // Ignore CSRF only for login
-                .build();
-    }
+//    @Bean
+//    public SecurityFilterChain ecurityFilterChain(HttpSecurity http, JwFilter jwtFilter) throws Exception {
+//        return http
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/api/v1/Login","/error","/api/v1/Registration").permitAll()
+//                        .anyRequest().authenticated())
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+//                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/v1/Login","/error","api/v1/Registration")) // Ignore CSRF only for login
+//                .build();
+//    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {

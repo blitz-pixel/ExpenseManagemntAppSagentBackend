@@ -21,11 +21,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
+    Logger logger = Logger.getLogger(UserController.class.getName()); // Create a logger instance
 
     @PostMapping("/Login")
     public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
-        Logger logger = Logger.getLogger(UserController.class.getName()); // Create a logger instance
+
 
         try {
             String token = userService.authenticateUser(loginDTO);
@@ -44,8 +44,10 @@ public class UserController {
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO) {
         try {
             userService.addUserPersonal(registerDTO);
+//            userService.AddToAccount(registerDTO);
             return ResponseEntity.ok("User registered successfully");
         } catch (Exception e) {
+            logger.info(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }

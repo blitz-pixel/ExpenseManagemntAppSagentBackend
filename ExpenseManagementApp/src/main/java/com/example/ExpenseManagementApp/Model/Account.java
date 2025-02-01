@@ -19,7 +19,6 @@ public class  Account {
     @Column(name = "account_id", nullable = false)
     private Long account_id;
 
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
@@ -28,15 +27,12 @@ public class  Account {
 //    @JoinColumn(name = "user_id", nullable = false)
 //    private Long user_id;
 
-
     @Column(name = "account_name", nullable = false)
     private String accountName;
-
 
     @Enumerated(EnumType.STRING)  // Store the enum as a string in the database
     @Column(name = "type", nullable = false)
     private AccountType type;
-
 
 
     @Column(name = "created_at",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP",insertable = false)
@@ -45,6 +41,10 @@ public class  Account {
 
     public AccountType getType() {
         return type;
+    }
+
+    public void setType(AccountType type) {
+        this.type = type;
     }
 
     public Long getAccount_id() {
@@ -56,28 +56,20 @@ public class  Account {
         return User_Foriegn_id;
     }
 
-    public String getAccountName() {
-        return accountName;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setAccount_id(Long account_id) {
-        this.account_id = account_id;
-    }
-
     public void setUser_Foriegn_id(User user_Foriegn_id) {
         User_Foriegn_id = user_Foriegn_id;
+    }
+
+    public String getAccountName() {
+        return accountName;
     }
 
     public void setAccountName(String accountName) {
         this.accountName = accountName;
     }
 
-    public void setType(AccountType type) {
-        this.type = type;
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
     public void setCreatedAt(Instant createdAt) {

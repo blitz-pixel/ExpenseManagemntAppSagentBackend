@@ -5,18 +5,28 @@ import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
 import Home from "./Components/Home";
 import Dashboard from "./Components/Dashboard";
+
 import Account from "./Components/Account.jsx";
+import Expense from "./Components/Expense.jsx";
+import Revenue from "./Components/Revenue.jsx";
+import Navbar from "./Components/Navbar.jsx";
+import Layout from "./Components/Layout.jsx";
 
 const App = () => {
     return (
         <div className="App">
             <Router>
                 <Routes>
-                    <Route path="/Account" element={<Account/>} />
-                    <Route path="/Registration" element={<Registration />} />
+                    <Route path="/" element={<Layout/>}>
+                        <Route index element={<Home />} />
+                        <Route path="/Dashboard" element={<Dashboard />} />
+                        <Route path="/Expense" element={<Expense/>}/>
+                        <Route path="/Revenue" element={<Revenue/>}/>
+                        <Route path="/Account" element={<Account />} />
+                        <Route path="/Navigation" element={<Navbar />} />
+                    </Route>
+                    <Route path="/Registration" element={ <Registration/>} />
                     <Route path="/Login" element={<Login />} />
-                    <Route path="/Dashboard" element={<Dashboard />} />
-                    <Route path="/" element={<Home/>} />
                 </Routes>
             </Router>
         </div>
