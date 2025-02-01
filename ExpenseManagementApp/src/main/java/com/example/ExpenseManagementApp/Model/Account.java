@@ -13,7 +13,7 @@ import java.time.Instant;
 @Setter
 @Entity
 @Table(name = "account")
-public class Account {
+public class  Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id", nullable = false)
@@ -21,8 +21,11 @@ public class Account {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User User_Foriegn_id;
+
+//    @JoinColumn(name = "user_id", nullable = false)
+//    private Long user_id;
 
     @Column(name = "account_name", nullable = false)
     private String accountName;
@@ -32,7 +35,7 @@ public class Account {
     private AccountType type;
 
 
-    @Column(name = "created_at",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP" )
+    @Column(name = "created_at",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP",insertable = false)
     private Instant createdAt;
 
 
