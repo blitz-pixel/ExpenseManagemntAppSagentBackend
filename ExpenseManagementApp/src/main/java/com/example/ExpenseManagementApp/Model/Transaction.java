@@ -3,6 +3,7 @@ package com.example.ExpenseManagementApp.Model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -21,6 +22,7 @@ public class Transaction {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "account_id", nullable = false)
+    @JsonIgnore
     private Account account;
 
     @Column(name = "date", nullable = false)
@@ -33,15 +35,40 @@ public class Transaction {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "t_name",nullable = false)
-    private String t_name;
-
     @Column(name = "amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
+    @JsonIgnore
     private Category category;
 
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setType(Category.CatType type) {
+        this.type = type;
+    }
+
+    public void setDate(Instant date) {
+        this.date = date;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    //    public void setId(Long id) {
+//        this.id = id;
+//    }
 
 }

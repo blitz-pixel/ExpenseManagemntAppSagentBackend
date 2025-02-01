@@ -23,10 +23,10 @@ public class CategoryService {
         this.accountRepository = accountRepository;
     }
 
-    public void createCategory(Category category, Long accountId) {
-        category.setScope_id(accountId);
-        categoryRepository.save(category);
-    }
+//    public void createCategory(Category category, Long accountId) {
+//        category.setScope_id(accountId);
+//        categoryRepository.save(category);
+//    }
 
     public Long isSharedAccount(Long accountId) throws SQLException {
         Account account = accountRepository.findById(accountId).orElse(null);

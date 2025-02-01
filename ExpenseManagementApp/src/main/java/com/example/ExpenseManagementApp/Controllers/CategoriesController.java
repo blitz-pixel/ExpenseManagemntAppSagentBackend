@@ -21,16 +21,16 @@ public class CategoriesController {
     }
 
     @PostMapping("/{accountId}/categories")
-    public ResponseEntity<String> createCategory(@PathVariable Long accountId, @RequestBody Category category) {
-        try {
-            Long account_scope_id = categoryService.isSharedAccount(accountId);
-            categoryService.createCategory(category, account_scope_id);
-            return new ResponseEntity<>("Category created successfully", HttpStatus.CREATED);
-        } catch (SQLException e) {
-            // Log the exception and return an error response
-            return new ResponseEntity<>("Error creating category: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    public ResponseEntity<String> createCategory(@PathVariable Long accountId, @RequestBody Category category) {
+//        try {
+//            Long account_scope_id = categoryService.isSharedAccount(accountId);
+//            categoryService.createCategory(category, account_scope_id);
+//            return new ResponseEntity<>("Category created successfully", HttpStatus.CREATED);
+//        } catch (SQLException e) {
+//            // Log the exception and return an error response
+//            return new ResponseEntity<>("Error creating category: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
     @GetMapping("/{accountId}/categories")
     public ResponseEntity<List<Category>> getCategories(@PathVariable Long accountId) {

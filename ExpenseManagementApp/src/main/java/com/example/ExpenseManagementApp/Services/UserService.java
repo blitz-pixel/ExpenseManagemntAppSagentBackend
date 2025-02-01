@@ -5,6 +5,7 @@ import com.example.ExpenseManagementApp.DTO.LoginDTO;
 import com.example.ExpenseManagementApp.DTO.RegisterDTO;
 import com.example.ExpenseManagementApp.Model.Account;
 import com.example.ExpenseManagementApp.Model.User;
+import com.example.ExpenseManagementApp.Repositories.AccountRepository;
 import com.example.ExpenseManagementApp.Repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,13 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, JwtUtil jwtUtil) {
+    public UserService(UserRepository userRepository, JwtUtil jwtUtil, AccountRepository accountRepository) {
         this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
+        this.accountRepository = accountRepository;
     }
 
     // For testing
@@ -35,22 +38,40 @@ public class UserService implements UserDetailsService {
 //        return userRepository.save(user);
 //    }
 
+    public boolean FindUserByEmail(String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        return userOptional.isPresent();
+    }
+
+
     public void addUserPersonal(RegisterDTO registerDTO) {
+        if (FindUserByEmail(registerDTO.getEmail()) &&
+                userRepository.findByEmail(registerDTO.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email already exists");
+        }
+
+
         User user = new User();
-        Account account = new Account();
         user.setUserName(registerDTO.getUserName());
         user.setEmail(registerDTO.getEmail());
         user.setPassword(registerDTO.getPassword());
-//        if (Objects.equals(registerDTO.getEmail(), userRepository.findByEmail(registerDTO.getEmail()).get().getEmail())) {
-//            throw new IllegalArgumentException("Email already exists");
-//        }
-        account.setAccountName(registerDTO.getUserName());
+
+        User savedUser = userRepository.save(user);  // Save user first
+
+        System.out.println("Saved User ID: " + savedUser.getUser_id());
+
+        Account account = new Account();
+        account.setAccountName(savedUser.getUserName());
         account.setType(Account.AccountType.personal);
-        account.setUser_Foriegn_id(user);
+        account.setUser_Foriegn_id(savedUser);
+        System.out.println("Account :"  + account.getUser_Foriegn_id());
+        System.out.println("Account ID:"  + account.getUser_Foriegn_id().getUser_id());
+        // Fix the typo here
+
+        Account savedAccount = accountRepository.save(account); // Save account after user is saved
+        System.out.println("Saved Account ID: " + savedAccount.getAccount_id());
 
 
-
-        userRepository.save(user);
     }
 
     public String getUserID(LoginDTO loginDTO){
@@ -96,7 +117,6 @@ public class UserService implements UserDetailsService {
         // Return a custom UserDetails object (you can use CustomUserDetails)
         User user = userOptional.get();
         return new CustomUserDetails(user);
-}
+    }
 
 }
-
