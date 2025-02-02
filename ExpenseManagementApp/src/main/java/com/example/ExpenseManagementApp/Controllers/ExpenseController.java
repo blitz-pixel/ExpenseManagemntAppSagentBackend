@@ -1,24 +1,20 @@
 package com.example.ExpenseManagementApp.Controllers;
 
-import com.example.ExpenseManagementApp.DTO.ExpenseDTO;
+import com.example.ExpenseManagementApp.DTO.ExpenseRequestDTO;
+import com.example.ExpenseManagementApp.DTO.ExpenseResponseDTO;
 import com.example.ExpenseManagementApp.Model.Transaction;
 import com.example.ExpenseManagementApp.Services.TransactionService;
-import com.example.ExpenseManagementApp.Services.UserService;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.logging.Logger;
 
+
+@Slf4j
 @Controller
 @RequestMapping("/api/v1/expense")
 public class ExpenseController {
@@ -31,7 +27,7 @@ public class ExpenseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExpenseDTO>> getExpensesByAccount(@RequestParam Long accountId){
+    public ResponseEntity<List<ExpenseResponseDTO>> getExpensesByAccount(@RequestParam Long accountId){
         try {
 //            List<Transaction> TransactionList = expenseService.getExpenseTransactions(accountId);
 //            logger.info(TransactionList.toString());
@@ -43,7 +39,19 @@ public class ExpenseController {
             logger.info(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
+    }
 
+    @PostMapping("/add")
+    public ResponseEntity<String> addExpenseTransaction(@RequestBody ExpenseRequestDTO expenseRequestDTO) {
+        try {
+            Transaction t = expenseService.addExpenseTransaction(expenseRequestDTO);
+            logger.info(t.getId().toString());
+            return ResponseEntity.ok("Expense added successfully");
+        } catch (Exception e) {
+            System.out.print(e);
+            logger.info(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }

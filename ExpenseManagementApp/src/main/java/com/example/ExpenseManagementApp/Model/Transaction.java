@@ -16,6 +16,7 @@ import java.time.Instant;
 @Table(name = "transaction")
 public class Transaction {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_id", nullable = false)
     private Long id;
 
