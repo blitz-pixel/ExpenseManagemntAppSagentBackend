@@ -1,6 +1,7 @@
 package com.example.ExpenseManagementApp.Controllers;
 
 import com.example.ExpenseManagementApp.DTO.ExpenseDTO;
+import com.example.ExpenseManagementApp.DTO.RevenueRequest;
 import com.example.ExpenseManagementApp.Model.Transaction;
 import com.example.ExpenseManagementApp.Services.TransactionService;
 import com.example.ExpenseManagementApp.Services.UserService;
@@ -11,10 +12,7 @@ import jakarta.persistence.Id;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -29,6 +27,23 @@ public class ExpenseController {
     public ExpenseController(TransactionService expenseService) {
         this.expenseService = expenseService;
     }
+    @PostMapping("/revenue")
+    public ResponseEntity<Transaction> addRevenue(@RequestBody RevenueRequest request) {
+        try {
+            Transaction transaction = expenseService.addRevenue(
+                    request.getAccountId(),
+                    request.getDescription(),
+                    request.getAmount(),
+                    request.getCategoryId()
+            );
+            return ResponseEntity.ok(transaction);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
 
     @GetMapping
     public ResponseEntity<List<ExpenseDTO>> getExpensesByAccount(@RequestParam Long accountId){

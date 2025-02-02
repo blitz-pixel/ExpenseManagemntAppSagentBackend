@@ -13,6 +13,6 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-    @Query("SELECT t FROM Transaction t WHERE t.type = ?1 AND t.account.account_id = ?2")
+    @Query("SELECT t FROM Transaction t WHERE t.type = ?1 AND t.account.id = ?2")
     List<Transaction> findAllByTypeAndAccountId(Category.CatType type, Long accountId);
 }
