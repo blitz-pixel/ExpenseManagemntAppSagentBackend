@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -51,6 +52,13 @@ public class CategoryTests {
         Category c = categoryRepository.findByParent("Burger",5L).orElse(null);
 
         assertNotNull(c, "Sub Category should not be null when it exists.");
+    }
+
+    @Test
+    public void testThtFindsAllCategories(){
+        List<Category> Categories = categoryRepository.findCategoriesById(42L);
+
+        assertNotNull(Categories, "Category should not be null when it exists.");
     }
 
 

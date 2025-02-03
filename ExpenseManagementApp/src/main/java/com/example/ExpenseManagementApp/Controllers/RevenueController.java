@@ -5,14 +5,13 @@ import com.example.ExpenseManagementApp.Model.Transaction;
 import com.example.ExpenseManagementApp.Services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 //import sun.util.logging.PlatformLogger;
 
 import java.util.logging.Logger;
 
 @RestController
+@RequestMapping("/api/v1/revenue")
 public class RevenueController {
     Logger logger = Logger.getLogger(getClass().getName());
 
@@ -24,7 +23,17 @@ public class RevenueController {
         this.transactionService = transactionService;
     }
 
-    @PostMapping("/revenue")
+    @GetMapping
+    public ResponseEntity<?> getAllRevenues(@RequestParam Long account_id) {
+        try {
+            return ResponseEntity.ok(transactionService.getRevenueTransactions(account_id));
+        } catch (Exception e) {
+            logger.info("Error Revenue : " + e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/add")
     public ResponseEntity<String> addRevenue(@RequestBody RevenueRequest request) {
 
         try {
@@ -56,4 +65,6 @@ public class RevenueController {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
     }
+
+
 }

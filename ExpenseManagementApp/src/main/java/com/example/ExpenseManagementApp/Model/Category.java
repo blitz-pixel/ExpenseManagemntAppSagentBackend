@@ -1,5 +1,6 @@
 package com.example.ExpenseManagementApp.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
@@ -12,6 +13,7 @@ import org.hibernate.annotations.*;
 @Setter
 @Entity
 @Table(name = "category")
+//@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Category {
 
 
@@ -22,15 +24,15 @@ public class Category {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "user_id", nullable = false)
-    @Nullable
+    @JoinColumn(name = "user_id", nullable = true)
+//    @Nullable
     private User user;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "account_id", nullable = false)
-    @Nullable
+    @JoinColumn(name = "account_id", nullable = true)
+//    @Nullable
     private Account account;
 
     @Enumerated(EnumType.STRING)
@@ -91,7 +93,7 @@ public class Category {
     }
 
     public enum CatType {
-        income, revenue, expense
+        income,expense
     }
 
 
