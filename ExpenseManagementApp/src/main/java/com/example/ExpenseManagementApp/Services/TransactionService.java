@@ -3,6 +3,7 @@ package com.example.ExpenseManagementApp.Services;
 
 import com.example.ExpenseManagementApp.DTO.ExpenseRequestDTO;
 import com.example.ExpenseManagementApp.DTO.ExpenseResponseDTO;
+import com.example.ExpenseManagementApp.DTO.RevenueResponseDTO;
 import com.example.ExpenseManagementApp.Model.Account;
 import com.example.ExpenseManagementApp.Model.Category;
 import com.example.ExpenseManagementApp.Model.Transaction;
@@ -87,4 +88,16 @@ public class TransactionService {
 
         return transactionRepository.save(transaction);
     }
+
+    public List<RevenueResponseDTO> getRevenueTransactions(Long accountId) {
+        List<Transaction> ExpenseList = transactionRepository.findAllByTypeAndAccountId(Category.CatType.income, accountId);
+//        ExpenseList.forEach(transaction -> Hibernate.initialize(transaction.getCategory()));
+//        ExpenseList.forEach(transaction -> Hibernate.initialize(transaction.getAccount()));
+        List<RevenueResponseDTO> RevenueResponseDTOs = ExpenseList.stream()
+                .map(RevenueResponseDTO::new)
+                .toList();
+        logger.info(ExpenseList.toString());
+        return RevenueResponseDTOs;
+    }
+
 }

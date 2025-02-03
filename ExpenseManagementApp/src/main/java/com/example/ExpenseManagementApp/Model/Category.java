@@ -1,11 +1,10 @@
 package com.example.ExpenseManagementApp.Model;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import com.example.ExpenseManagementApp.Model.User;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Setter
@@ -13,8 +12,14 @@ import org.hibernate.annotations.*;
 @Table(name = "category")
 public class Category {
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id", nullable = false)
     private Long id;
 
@@ -22,7 +27,6 @@ public class Category {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -39,19 +43,18 @@ public class Category {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "parent_id")
-    private Category parent;  // Self-referencing relationship
-
+    private Category parent; // Self-referencing relationship
 
     public Long getId() {
         return id;
     }
 
-    public User getUser() {
-        return user;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public User getUser() {
+        return user;
     }
 
     public Account getAccount() {
@@ -82,10 +85,11 @@ public class Category {
         return parent;
     }
 
+    public void setParent(Category parent) {
+        this.parent = parent;
+    }
 
     public enum CatType {
         income, revenue, expense
     }
-
-
 }
