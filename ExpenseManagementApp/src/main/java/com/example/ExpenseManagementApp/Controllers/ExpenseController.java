@@ -1,49 +1,57 @@
-//package com.example.expensemanagement.model;
-//
-//import jakarta.persistence.Entity;
-//import jakarta.persistence.GeneratedValue;
-//import jakarta.persistence.GenerationType;
-//import jakarta.persistence.Id;
-//
-//@Entity
-//public class ExpenseController {
-//    @Id
-//    @GeneratedValue alue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-//    private String description;
-//    private Double amount;
-//
-//    // Constructors
-//    public Expense() {
-//    }
-//
-//    public Expense(String description, Double amount) {
-//        this.description = description;
-//        this.amount = amount;
-//    }
-//
-//    // Getters and Setters
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    public String getDescription() {
-//        return description;
-//    }
-//
-//    public void setDescription(String description) {
-//        this.description = description;
-//    }
-//
-//    public Double getAmount() {
-//        return amount;
-//    }
-//
-//    public void setAmount(Double amount) {
-//        this.amount = amount;
-//    }
-//}
+package com.example.ExpenseManagementApp.Controllers;
+
+import com.example.ExpenseManagementApp.DTO.ExpenseRequestDTO;
+import com.example.ExpenseManagementApp.DTO.ExpenseResponseDTO;
+import com.example.ExpenseManagementApp.Model.Transaction;
+import com.example.ExpenseManagementApp.Services.TransactionService;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.logging.Logger;
+
+
+@Slf4j
+@Controller
+@RequestMapping("/api/v1/expense")
+public class ExpenseController {
+
+    Logger logger = Logger.getLogger(ExpenseController.class.getName()); // Create a logger instance
+    private final TransactionService expenseService;
+
+    public ExpenseController(TransactionService expenseService) {
+        this.expenseService = expenseService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ExpenseResponseDTO>> getExpensesByAccount(@RequestParam Long accountId){
+        try {
+//            List<Transaction> TransactionList = expenseService.getExpenseTransactions(accountId);
+//            logger.info(TransactionList.toString());
+//            for (Transaction transaction : TransactionList) {
+//                logger.info(transaction.toString());
+//            }
+            return ResponseEntity.ok(expenseService.getExpenseTransactions(accountId));
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<String> addExpenseTransaction(@RequestBody ExpenseRequestDTO expenseRequestDTO) {
+        try {
+            Transaction t = expenseService.addExpenseTransaction(expenseRequestDTO);
+            logger.info(t.getId().toString());
+            return ResponseEntity.ok("Expense added successfully");
+        } catch (Exception e) {
+            System.out.print(e);
+            logger.info(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+}

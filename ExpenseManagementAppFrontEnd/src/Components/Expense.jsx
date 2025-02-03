@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+
+import { useState } from "react";
 import { Button, TextField, Modal, Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 
 const ExpensePage = () => {
@@ -20,8 +21,10 @@ const ExpensePage = () => {
     // Handle adding the new expense
     const handleAddExpense = () => {
         setExpenses([...expenses, { id: expenses.length + 1, serialNo: expenses.length + 1, ...newExpense }]);
+        console.log(expenses[0]["name"])
         setShowModal(false); // Close modal after adding
         setNewExpense({ name: "", category: "", subCategory: "", amount: "", date: "" }); // Reset form
+
     };
 
     return (
@@ -69,16 +72,16 @@ const ExpensePage = () => {
                 aria-labelledby="add-expense-modal"
                 aria-describedby="form-to-add-new-expense"
             >
-                <Box sx={{ 
-                    width: 400, 
-                    bgcolor: "white", 
-                    borderRadius: "8px", 
-                    p: 3, 
-                    position: "absolute", 
-                    top: "50%", 
-                    left: "50%", 
-                    transform: "translate(-50%, -50%)", 
-                    boxShadow: 24 
+                <Box sx={{
+                    width: 400,
+                    bgcolor: "white",
+                    borderRadius: "8px",
+                    p: 3,
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    boxShadow: 24
                 }}>
                     <Typography variant="h6" gutterBottom>Add Expense</Typography>
                     <TextField

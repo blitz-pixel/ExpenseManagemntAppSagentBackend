@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import com.example.ExpenseManagementApp.Model.User;
 import org.hibernate.annotations.*;
 
 @Getter
@@ -17,13 +18,16 @@ public class Category {
     @Column(name = "category_id", nullable = false)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "scope", nullable = false)
-    private Scope scope; // Enum type for 'USER' and 'ACCOUNT'
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
 
-    @Column(name = "scope_id", nullable = false)
-    private Long scope_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
@@ -35,27 +39,27 @@ public class Category {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "parent_id")
-    private Category parent;  // Self-referencing relationsh
+    private Category parent;  // Self-referencing relationship
 
 
     public Long getId() {
         return id;
     }
 
-    public Scope getScope() {
-        return scope;
+    public User getUser() {
+        return user;
     }
 
-    public void setScope(Scope scope) {
-        this.scope = scope;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Long getScope_id() {
-        return scope_id;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setScope_id(Long scope_id) {
-        this.scope_id = scope_id;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public CatType getType() {
@@ -78,10 +82,6 @@ public class Category {
         return parent;
     }
 
-    public enum Scope {
-        USER,
-        ACCOUNT
-    }
 
     public enum CatType {
         income,expense
