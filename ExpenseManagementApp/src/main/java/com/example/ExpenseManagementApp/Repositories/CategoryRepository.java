@@ -23,6 +23,9 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
 
     List<Category> findByType(Category.CatType type);
 
+
+    List<Category> findCategoriesById(Long id);
+
 //    @Query("SELECT c FROM Category c WHERE c.name = ?1")
 //    Optional<Category> findParentByName(String name);
 }

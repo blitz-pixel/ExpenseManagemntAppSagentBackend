@@ -73,18 +73,12 @@ public class CategoryService {
         }
     }
 
-   public List<Category> getCategories(Long scopeId){
-//        return categoryRepository.findCategoriesByScopeId(scopeId);
-       return null;
+   public List<Category> getCategoriesById(Long id){
+        return categoryRepository.findCategoriesById(id);
    }
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
-    }
 
-    public Category getCategoryById(Long id) {
-        return categoryRepository.findById(id).orElse(null);
-    }
+
 
 
     public List<Category> getCategoriesByType(Category.CatType type) {
