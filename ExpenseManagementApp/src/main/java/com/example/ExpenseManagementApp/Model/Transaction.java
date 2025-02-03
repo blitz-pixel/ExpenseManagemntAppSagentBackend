@@ -23,7 +23,7 @@ public class Transaction {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "account_id", nullable = false)
-//    @JsonIgnore
+    @JsonIgnore
     private Account account;
 
     @Column(name = "date", nullable = false)
@@ -44,6 +44,30 @@ public class Transaction {
 //    @JsonIgnore
     private Category category;
 
+    public Long getId() {
+        return id;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public Instant getDate() {
+        return date;
+    }
+
+    public Category.CatType getType() {
+        return type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
     public Category getCategory() {
         return category;
     }
@@ -52,53 +76,29 @@ public class Transaction {
         this.category = category;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public Category.CatType getType() {
-        return type;
-    }
-
     public void setType(Category.CatType type) {
         this.type = type;
-    }
-
-    public Instant getDate() {
-        return date;
     }
 
     public void setDate(Instant date) {
         this.date = date;
     }
 
-    public Account getAccount() {
-        return account;
-    }
-
     public void setAccount(Account account) {
         this.account = account;
     }
 
-    public Long getId() {
-        return id;
+    public void setId(Long id) {
+        this.id = id;
     }
-
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
 
 
 

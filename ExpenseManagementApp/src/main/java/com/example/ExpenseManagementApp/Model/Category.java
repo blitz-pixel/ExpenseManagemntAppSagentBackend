@@ -91,7 +91,7 @@ public class Category {
     }
 
     public enum CatType {
-        income,expense
+        income, revenue, expense
     }
 
 

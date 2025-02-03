@@ -4,8 +4,12 @@ import com.example.ExpenseManagementApp.DTO.ExpenseRequestDTO;
 import com.example.ExpenseManagementApp.DTO.ExpenseResponseDTO;
 import com.example.ExpenseManagementApp.Model.Transaction;
 import com.example.ExpenseManagementApp.Services.TransactionService;
+import com.example.ExpenseManagementApp.Services.UserService;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +17,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.logging.Logger;
 
-
-@Slf4j
-@Controller
+@RestController
 @RequestMapping("/api/v1/expense")
 public class ExpenseController {
 
     Logger logger = Logger.getLogger(ExpenseController.class.getName()); // Create a logger instance
     private final TransactionService expenseService;
+
 
     public ExpenseController(TransactionService expenseService) {
         this.expenseService = expenseService;
