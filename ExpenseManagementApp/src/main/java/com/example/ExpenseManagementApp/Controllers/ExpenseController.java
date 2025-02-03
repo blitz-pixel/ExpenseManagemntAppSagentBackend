@@ -18,36 +18,4 @@ public class ExpenseController {
     public ExpenseController(TransactionService expenseService) {
         this.expenseService = expenseService;
     }
-
-    @PostMapping("/revenue")
-    public ResponseEntity<?> addRevenue(@RequestBody RevenueRequest request) {
-        try {
-            if (request == null) {
-                logger.warning("Request body is null");
-                return ResponseEntity.badRequest().body("Request body is missing");
-            }
-
-            logger.info("Received Request: Account ID = " + request.getAccountId() +
-                    ", Description = " + request.getDescription() +
-                    ", Amount = " + request.getAmount() +
-                    ", Category ID = " + request.getCategoryId()
-        );
-
-            if (request.getAccountId() == null || request.getAmount() == null) {
-                return ResponseEntity.badRequest().body("Missing required fields in the request body");
-            }
-
-            Transaction transaction = expenseService.addRevenue(
-                    request.getAccountId(),
-                    request.getDescription(),
-                    request.getAmount(),
-                    request.getCategoryId()
-            );
-
-            return ResponseEntity.ok(transaction);
-        } catch (Exception e) {
-            logger.warning("Error: " + e.getMessage());
-            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
-        }
-    }
 }

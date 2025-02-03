@@ -44,6 +44,34 @@ public class Transaction {
 //    @JsonIgnore
     private Category category;
 
+    public Long getId() {
+        return id;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public Instant getDate() {
+        return date;
+    }
+
+    public Category.CatType getType() {
+        return type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
     public void setCategory(Category category) {
         this.category = category;
     }

@@ -16,7 +16,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.logging.Logger;
 
-@Slf4j
 @Service
 public class TransactionService {
 
