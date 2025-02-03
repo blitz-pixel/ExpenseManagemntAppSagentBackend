@@ -8,16 +8,16 @@ public class CategoryDTO {
     @Nullable
     private Long accountId;
     @Nullable
-    private Long user_id;
+    private Long userId;
     @Nullable
     private String SubCategoryName;
 
     private String ParentCategoryName;
     private Category.CatType type;
 
-    public CategoryDTO(@Nullable Long accountId, @Nullable Long user_id, String SubCategoryName, @Nullable String ParentCategoryName, Category.CatType type) {
+    public CategoryDTO(@Nullable Long accountId, @Nullable Long userId, @Nullable String SubCategoryName, @Nullable String ParentCategoryName, Category.CatType type) {
         this.accountId = accountId;
-        this.user_id = user_id;
+        this.userId = userId;
         this.SubCategoryName = SubCategoryName;
         this.ParentCategoryName = ParentCategoryName;
         this.type = type;
@@ -33,12 +33,12 @@ public class CategoryDTO {
     }
 
     @Nullable
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(@Nullable Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(@Nullable Long userId) {
+        this.userId = userId;
     }
 
     public String getSubCategoryName() {

@@ -35,7 +35,7 @@ public class CategoryService {
         User user = null;
         if (categoryDTO.getAccountId() != null) account = accountRepository.findById(categoryDTO.getAccountId()).orElse(null);
 //        if (categoryDTO.getUser_id() == null) throw new IllegalArgumentException("User id is required");
-        if(categoryDTO.getUser_id() != null) user = userRepository.findById(categoryDTO.getUser_id()).orElse(null);
+        if(categoryDTO.getUserId() != null) user = userRepository.findById(categoryDTO.getUserId()).orElse(null);
         Category ParentCategory = categoryRepository.findByName(categoryDTO.getParentCategoryName()).orElse(null);
         Category SubCategory = categoryRepository.findByName(categoryDTO.getSubCategoryName()).orElse(null);
 
