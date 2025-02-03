@@ -21,8 +21,10 @@ const ExpensePage = () => {
     // Handle adding the new expense
     const handleAddExpense = () => {
         setExpenses([...expenses, { id: expenses.length + 1, serialNo: expenses.length + 1, ...newExpense }]);
+        console.log(expenses[0]["name"])
         setShowModal(false); // Close modal after adding
         setNewExpense({ name: "", category: "", subCategory: "", amount: "", date: "" }); // Reset form
+
     };
 
     return (
