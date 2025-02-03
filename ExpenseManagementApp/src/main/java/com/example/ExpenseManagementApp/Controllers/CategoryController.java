@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/v1/categories")
 public class CategoryController {
 
     private final CategoryService categoryService;
+    Logger logger = Logger.getLogger(CategoryController.class.getName());
 
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
@@ -29,12 +31,13 @@ public class CategoryController {
     @GetMapping("/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
         Category category = categoryService.getCategoryById(id);
-
+//        logger.info(category.toString());
         if (category != null && category.getParent() != null) {
-            System.out.println("Parent Category: " + category.getParent().getName());
+            System.out.println("Parent Category: " + category.getName());
         }
 
-        return ResponseEntity.ok(category);
+
+        return ResponseEntity.ok().body(category);
     }
 
 

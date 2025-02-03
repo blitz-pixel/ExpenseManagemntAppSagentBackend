@@ -11,6 +11,7 @@ import Expense from "./Components/Expense.jsx";
 import Revenue from "./Components/Revenue.jsx";
 import Navbar from "./Components/Navbar.jsx";
 import Layout from "./Components/Layout.jsx";
+import Settings from "./Components/Settings.jsx";
 
 const App = () => {
     return (
@@ -23,7 +24,8 @@ const App = () => {
                         <Route path="/Expense" element={<Expense/>}/>
                         <Route path="/Revenue" element={<Revenue/>}/>
                         <Route path="/Account" element={<Account />} />
-                        <Route path="/Navigation" element={<Navbar />} />
+                        <Route path="/Settings" element={<Settings />} />
+
                     </Route>
                     <Route path="/Registration" element={ <Registration/>} />
                     <Route path="/Login" element={<Login />} />

@@ -82,7 +82,7 @@ public class TransactionService {
         transaction.setAccount(accountRepository.findById(accountId).orElseThrow(() -> new RuntimeException("Account not found")));
         transaction.setDescription(description);
         transaction.setAmount(BigDecimal.valueOf(amount));
-        transaction.setType(Category.CatType.revenue);
+        transaction.setType(Category.CatType.income);
         transaction.setCategory(categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category not found")));
         transaction.setDate(Instant.now());
 

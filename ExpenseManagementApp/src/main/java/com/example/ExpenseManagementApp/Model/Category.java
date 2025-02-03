@@ -1,21 +1,20 @@
 package com.example.ExpenseManagementApp.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import com.example.ExpenseManagementApp.Model.User;
+import org.hibernate.annotations.*;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "category")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Category {
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
 
 
     @Id
@@ -26,11 +25,14 @@ public class Category {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id", nullable = false)
+    @Nullable
     private User user;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "account_id", nullable = false)
+    @Nullable
     private Account account;
 
     @Enumerated(EnumType.STRING)
@@ -43,18 +45,19 @@ public class Category {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "parent_id")
-    private Category parent; // Self-referencing relationship
+    private Category parent;  // Self-referencing relationship
+
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Account getAccount() {
@@ -90,6 +93,8 @@ public class Category {
     }
 
     public enum CatType {
-        income, revenue, expense
+        income,expense
     }
+
+
 }

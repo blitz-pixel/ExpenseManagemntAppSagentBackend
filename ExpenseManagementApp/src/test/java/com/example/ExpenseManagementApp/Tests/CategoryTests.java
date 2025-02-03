@@ -1,9 +1,11 @@
 package com.example.ExpenseManagementApp.Tests;
 
+import com.example.ExpenseManagementApp.DTO.CategoryDTO;
 import com.example.ExpenseManagementApp.DTO.ExpenseRequestDTO;
 import com.example.ExpenseManagementApp.Model.Category;
 import com.example.ExpenseManagementApp.Model.Transaction;
 import com.example.ExpenseManagementApp.Repositories.CategoryRepository;
+import com.example.ExpenseManagementApp.Services.CategoryService;
 import com.example.ExpenseManagementApp.Services.TransactionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,8 @@ public class CategoryTests {
 
     @Autowired
     private TransactionService transactionService;
-
+    @Autowired
+    private CategoryService categoryService;
 
 
     @Test
@@ -35,9 +38,10 @@ public class CategoryTests {
     @Test
     public void testThatCreatesCategory(){
         Category category = new Category();
+        CategoryDTO categoryDTO = new CategoryDTO(null, 42L, "", "Grocery", Category.CatType.expense);
+        Category savedCategory = categoryService.createCategory(categoryDTO);
 
 
-        Category savedCategory = categoryRepository.save(category);
 
         assertNotNull(savedCategory, "Category should be saved");
     }
@@ -49,14 +53,5 @@ public class CategoryTests {
         assertNotNull(c, "Sub Category should not be null when it exists.");
     }
 
-    @Test
-    public void testThatCreatesSubCategory(){
-        ExpenseRequestDTO expenseRequestDTO = new ExpenseRequestDTO();
-        expenseRequestDTO.setAccount_id(22L);
-        expenseRequestDTO.setCategoryName("Food");
-        expenseRequestDTO.setSubCategoryName("Burger");
-        expenseRequestDTO.setAmount(BigDecimal.valueOf(1000L));
-        expenseRequestDTO.setDate(Instant.now());
-        transactionService.addExpenseTransaction(expenseRequestDTO);
-    }
+
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -35,5 +36,16 @@ public class TransactionTests {
         Transaction transaction = transactionService.addExpenseTransaction(expenseRequestDTO);
 
         assertNotNull(transaction, "Category should be saved");
+    }
+
+    @Test
+    public void testThatCreatesSubCategory(){
+        ExpenseRequestDTO expenseRequestDTO = new ExpenseRequestDTO();
+        expenseRequestDTO.setAccount_id(22L);
+        expenseRequestDTO.setCategoryName("Food");
+        expenseRequestDTO.setSubCategoryName("Burger");
+        expenseRequestDTO.setAmount(BigDecimal.valueOf(1000L));
+        expenseRequestDTO.setDate(Instant.now());
+        transactionService.addExpenseTransaction(expenseRequestDTO);
     }
 }
