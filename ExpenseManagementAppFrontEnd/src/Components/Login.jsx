@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import {Link, Navigate} from "react-router-dom";
-// import "./Auth.css";
+import { Link, Navigate } from "react-router-dom";
 
 const Login = () => {
     const [credentials, setCredentials] = useState({
@@ -9,6 +8,9 @@ const Login = () => {
         password: "",
     });
 
+    // const [token,setToken] = useState("")
+
+    const [error, setError] = useState("");
     const [redirect, setRedirect] = useState(false);
 
     const handleChange = (e) => {
@@ -17,29 +19,42 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const response = await axios.post("http://localhost:8080/api/v1/Login", credentials);
-            console.log(response.data);
-            if (response.status === 200){
-                console.log("Login successful");
-                setRedirect(true)
+            await axios.post("http://localhost:8080/api/v1/Login", credentials)
+                .then(response => {
+                    if (response.status === 200) {
+                        console.log("Login successful");
+                        setRedirect(true);
+                        // console.log(response);
+                        const token = response.headers.get("Authorization");
+                        // console.log(token)
+                        // console.log(response)
+                        if (token) {
+                            localStorage.setItem("token", token);
 
-            }
-            alert(response.data.message);
-        } catch (error) {
-            console.error("Error during login:", error);
-            console.log(credentials);
-            alert("Login failed.");
-        }
-    };
+                        } else {
+                            console.warn("No token received");
+                            // throw new error("");
+                        }
+                    }
+                    // return response;
+        }).catch((error) => {
+                        if (error.status === 400){
+                            setError("Invalid Credentials")
+                        }
+                        console.error("Login failed:", error);
+                    // setError(error.response?.data || "Login failed");
+                    // setError("Invalid email or password" + response.data);
 
-    if (redirect) {
-       return  <Navigate to="/Account" />
+                });
+
     }
-
+    if (redirect) {
+        return <Navigate to="/Account" state={{ email: credentials.email }} />;
+    }
     return (
         <div className="auth-container">
             <form onSubmit={handleSubmit} className="auth-form">
+                {error}
                 <h2>Login</h2>
                 <label>Email:</label>
                 <input
@@ -49,8 +64,8 @@ const Login = () => {
                     onChange={handleChange}
                     required
                 />
-                <br></br>
-                <label>Password:  </label>
+                <br />
+                <label>Password:</label>
                 <input
                     type="password"
                     name="password"
@@ -58,21 +73,38 @@ const Login = () => {
                     onChange={handleChange}
                     required
                 />
-                <br></br>
+                <br />
                 <button type="submit">Login</button>
             </form>
             <div>
                 <p>
-                Don&#39;t have an account?{" "}
-                <Link to="/Registration" style={{ marginLeft: "5px", textDecoration: "none" }}>
-                    Register
-                </Link>
+                    Don&#39;t have an account?{" "}
+                    <Link to="/Registration" style={{ marginLeft: "5px", textDecoration: "none" }}>
+                        Register
+                    </Link>
                 </p>
-                <Link to="/" style={{ marginLeft: "5px", textDecoration: "none" }}>  Forgot Password? </Link>             
-            
+                <Link to="/" style={{ marginLeft: "5px", textDecoration: "none" }}>
+                    Forgot Password?
+                </Link>
             </div>
         </div>
     );
 };
 
 export default Login;
+
+
+
+
+// // console.log(response.data);
+// console.log("Token:", response.data);
+// if (response.status === 200){
+//     console.log("Login successful");
+//     setRedirect(true)
+//     localStorage.setItem("token", response.data);
+//     // localStorage.setItem("name", credentials.email);
+//
+// }
+// console.log(response.data);
+// console.log(response)
+// alert("Logine successfully");

@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Button, TextField, Modal, Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
+import "./Navbar.jsx";
+import Navbar from "./Navbar.jsx";
 
 const RevenuePage = () => {
     const [revenues, setRevenues] = useState([]);
@@ -25,6 +27,7 @@ const RevenuePage = () => {
     };
 
     return (
+        // <Navbar/>
         <div style={{ padding: "20px", maxWidth: "900px", margin: "auto" }}>
             {/* Header Section with Proper Alignment */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -69,16 +72,16 @@ const RevenuePage = () => {
                 aria-labelledby="add-revenue-modal"
                 aria-describedby="form-to-add-new-revenue"
             >
-                <Box sx={{ 
-                    width: 400, 
-                    bgcolor: "white", 
-                    borderRadius: "8px", 
-                    p: 3, 
-                    position: "absolute", 
-                    top: "50%", 
-                    left: "50%", 
-                    transform: "translate(-50%, -50%)", 
-                    boxShadow: 24 
+                <Box sx={{
+                    width: 400,
+                    bgcolor: "white",
+                    borderRadius: "8px",
+                    p: 3,
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    boxShadow: 24
                 }}>
                     <Typography variant="h6" gutterBottom>Add Revenue</Typography>
                     <TextField
