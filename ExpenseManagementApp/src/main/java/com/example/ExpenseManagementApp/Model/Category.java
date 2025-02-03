@@ -1,5 +1,6 @@
 package com.example.ExpenseManagementApp.Model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -15,18 +16,21 @@ public class Category {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id", nullable = false)
+    @Nullable
     private User user;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "account_id", nullable = false)
+    @Nullable
     private Account account;
 
     @Enumerated(EnumType.STRING)
@@ -82,6 +86,9 @@ public class Category {
         return parent;
     }
 
+    public void setParent(Category parent) {
+        this.parent = parent;
+    }
 
     public enum CatType {
         income,expense

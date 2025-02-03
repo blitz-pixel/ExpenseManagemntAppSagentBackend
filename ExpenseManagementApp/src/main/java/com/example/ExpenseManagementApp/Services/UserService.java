@@ -77,16 +77,12 @@ public class UserService implements UserDetailsService {
 
     }
 
-//    public String getUserID(LoginDTO loginDTO){
-//        Optional<User> userOptional = userRepository.findByEmailAndPassword(loginDTO.getEmail(), loginDTO.getPassword());
-//        if (userOptional.isEmpty()) {
-//            throw new UsernameNotFoundException("User not found with email: " + loginDTO.getEmail());
-//        }
-//
-//        User user = userOptional.get();
-//
-//        return user.getUserName();
-//    }
+    public User getUserById(Long id) {
+        User userOptional = userRepository.findById(id).orElse(null);
+
+
+        return userOptional;
+    }
 
     public String authenticateUser(LoginDTO loginDTO) {
         //*

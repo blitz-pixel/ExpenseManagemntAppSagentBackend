@@ -20,4 +20,7 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
 
     @Query("SELECT c FROM Category c WHERE c.name = ?1 AND c.parent.id = ?2")
     Optional<Category> findByParent(String name, Long parentCategoryId);
+
+//    @Query("SELECT c FROM Category c WHERE c.name = ?1")
+//    Optional<Category> findParentByName(String name);
 }
