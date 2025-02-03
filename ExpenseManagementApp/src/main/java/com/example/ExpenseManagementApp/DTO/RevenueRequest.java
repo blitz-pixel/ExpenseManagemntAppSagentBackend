@@ -37,5 +37,5 @@ public class RevenueRequest {
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
-    }
+   }
 }
