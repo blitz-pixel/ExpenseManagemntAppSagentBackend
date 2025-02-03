@@ -1457,7 +1457,7 @@ esutils@^2.0.2:
     "@emotion/styled" "^11.14.0"
     "@mui/material" "^6.4.1"
     axios "^1.7.9"
-    expensemanagementappfrontend "file:../../../../Users/Family/AppData/Local/Yarn/Cache/v6/npm-expensemanagementappfrontend-0.0.0-caa8dbcb-f756-44da-8113-e9b4c1b7a13a-1737985024761/node_modules/expensemanagementappfrontend"
+    expensemanagementappfrontend "file:../../../AppData/Local/Yarn/Cache/v6/npm-expensemanagementappfrontend-0.0.0-e66d9dcc-1184-4edf-8468-2c8675ba50b8-1738551816934/node_modules/expensemanagementappfrontend"
     lucide-react "^0.474.0"
     react "^18.3.1"
     react-dom "^18.3.1"
@@ -2666,9 +2666,9 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-vite@^6.0.5:
+vite@^6.0.11:
   version "6.0.11"
-  resolved "https://registry.npmjs.org/vite/-/vite-6.0.11.tgz"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-6.0.11.tgz#224497e93e940b34c3357c9ebf2ec20803091ed8"
   integrity sha512-4VL9mQPKoHy4+FE0NnRE/kbY51TOfaknxAjt3fJbGJxhIpBZiqVzlZDEesWWsuREXHwNdAoOFZ9MkPEVXczHwg==
   dependencies:
     esbuild "^0.24.2"
