@@ -1,16 +1,15 @@
 package com.example.ExpenseManagementApp.Tests;
 
-import com.example.ExpenseManagementApp.DTO.ExpenseRequestDTO;
+import com.example.ExpenseManagementApp.DTO.CategoryDTO;
 import com.example.ExpenseManagementApp.Model.Category;
-import com.example.ExpenseManagementApp.Model.Transaction;
 import com.example.ExpenseManagementApp.Repositories.CategoryRepository;
+import com.example.ExpenseManagementApp.Services.CategoryService;
 import com.example.ExpenseManagementApp.Services.TransactionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.math.BigDecimal;
-import java.time.Instant;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -22,7 +21,8 @@ public class CategoryTests {
 
     @Autowired
     private TransactionService transactionService;
-
+    @Autowired
+    private CategoryService categoryService;
 
 
     @Test
@@ -35,9 +35,8 @@ public class CategoryTests {
     @Test
     public void testThatCreatesCategory(){
         Category category = new Category();
-
-
-        Category savedCategory = categoryRepository.save(category);
+        CategoryDTO categoryDTO = new CategoryDTO(22L, null, "Rent", "House", Category.CatType.income);
+        Category savedCategory = categoryService.createCategory(categoryDTO);
 
         assertNotNull(savedCategory, "Category should be saved");
     }
@@ -50,13 +49,11 @@ public class CategoryTests {
     }
 
     @Test
-    public void testThatCreatesSubCategory(){
-        ExpenseRequestDTO expenseRequestDTO = new ExpenseRequestDTO();
-        expenseRequestDTO.setAccount_id(22L);
-        expenseRequestDTO.setCategoryName("Food");
-        expenseRequestDTO.setSubCategoryName("Burger");
-        expenseRequestDTO.setAmount(BigDecimal.valueOf(1000L));
-        expenseRequestDTO.setDate(Instant.now());
-        transactionService.addExpenseTransaction(expenseRequestDTO);
+    public void testThtFindsAllCategories(){
+        List<Category> Categories = categoryRepository.findByAccountIdOrUserID(42L);
+
+        assertNotNull(Categories, "Category should not be null when it exists.");
     }
+
+
 }

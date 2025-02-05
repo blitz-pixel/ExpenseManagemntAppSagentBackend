@@ -23,13 +23,14 @@ const Login = () => {
                 .then(response => {
                     if (response.status === 200) {
                         console.log("Login successful");
+                        console.log(response);
                         setRedirect(true);
-                        // console.log(response);
-                        const token = response.headers.get("Authorization");
-                        // console.log(token)
+                        const token = response.headers.get("X-Account-ID");
+                        console.log(token);
+                        // console.log("Token get during login:"+ token);
                         // console.log(response)
                         if (token) {
-                            localStorage.setItem("token", token);
+                            localStorage.setItem("accountId", token);
 
                         } else {
                             console.warn("No token received");

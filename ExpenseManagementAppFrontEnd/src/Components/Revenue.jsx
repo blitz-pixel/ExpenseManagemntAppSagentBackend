@@ -1,29 +1,68 @@
-import  { useState } from "react";
+import {useEffect, useState} from "react";
 import { Button, TextField, Modal, Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 import "./Navbar.jsx";
-import Navbar from "./Navbar.jsx";
+import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 const RevenuePage = () => {
+    const id =  localStorage.getItem("accountId");
     const [revenues, setRevenues] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [newRevenue, setNewRevenue] = useState({
-        name: "",
-        category: "",
-        subCategory: "",
+        accountId : id,
+        ParentCategoryName: "",
+        SubCategoryName: "",
         amount: "",
         date: "",
     });
+    const [refresh, setRefresh] = useState(false);
 
     // Handle input change inside modal
     const handleChange = (field, value) => {
         setNewRevenue({ ...newRevenue, [field]: value });
     };
 
+    useEffect(() => {
+        const getRevenue = async () => {
+            try {
+                console.log("Fetching revenue for account ID:", id);
+
+                const resp = await axios.get(`http://localhost:8080/api/v1/revenue?accountId=${id}`);
+
+
+                const RevenueWithUnIds = resp.data.map((revenue) => ({
+                    id: uuidv4(),
+                    ...revenue
+                }));
+
+                setRevenues(RevenueWithUnIds);
+
+                console.log("Fetched Revenues:", RevenueWithUnIds);
+            } catch (error) {
+                console.error("Error fetching revenue:", error);
+            }
+        };
+
+        getRevenue();
+    }, [refresh,id]);
+
     // Handle adding the new revenue
-    const handleAddRevenue = () => {
-        setRevenues([...revenues, { id: revenues.length + 1, serialNo: revenues.length + 1, ...newRevenue }]);
-        setShowModal(false); // Close modal after adding
-        setNewRevenue({ name: "", category: "", subCategory: "", amount: "", date: "" }); // Reset form
+    const handleAddRevenue = async () => {
+
+        const NewRevenue = newRevenue;
+        try {
+            const response = await axios.post("http://localhost:8080/api/v1/revenue/add", newRevenue);
+            console.log(response)
+
+            const addedRevenue = { id: uuidv4(), ...newRevenue };
+            setRevenues([...revenues, addedRevenue]);
+            setRefresh(prev => !prev);
+        } catch (error) {
+            console.error("Error adding new revenue:", error);
+        }
+
+        setShowModal(false);
+        setNewRevenue({ accountId : id,ParentCategoryName: "", SubCategoryName: "", amount: "", date: "" });
     };
 
     return (
@@ -42,7 +81,6 @@ const RevenuePage = () => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>S.No</TableCell>
-                                <TableCell>Name</TableCell>
                                 <TableCell>Category</TableCell>
                                 <TableCell>Sub-Category</TableCell>
                                 <TableCell>Amount</TableCell>
@@ -50,16 +88,18 @@ const RevenuePage = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {revenues.map((revenue) => (
-                                <TableRow key={revenue.id}>
-                                    <TableCell>{revenue.serialNo}</TableCell>
-                                    <TableCell>{revenue.name}</TableCell>
-                                    <TableCell>{revenue.category}</TableCell>
-                                    <TableCell>{revenue.subCategory}</TableCell>
-                                    <TableCell>{revenue.amount}</TableCell>
-                                    <TableCell>{revenue.date}</TableCell>
-                                </TableRow>
-                            ))}
+                            {revenues.map((revenue, index) => {
+
+                                return (
+                                    <TableRow key={revenue.id}>
+                                        <TableCell>{index + 1}</TableCell>
+                                        <TableCell>{revenue.ParentCategoryName}</TableCell>
+                                        <TableCell>{revenue.SubCategoryName || "-"}</TableCell>
+                                        <TableCell>{revenue.amount}</TableCell>
+                                        <TableCell>{new Date(revenue.date).toLocaleDateString()}</TableCell>
+                                    </TableRow>
+                                );
+                            })}
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -85,27 +125,19 @@ const RevenuePage = () => {
                 }}>
                     <Typography variant="h6" gutterBottom>Add Revenue</Typography>
                     <TextField
-                        label="Name"
-                        variant="outlined"
-                        fullWidth
-                        value={newRevenue.name}
-                        onChange={(e) => handleChange("name", e.target.value)}
-                        sx={{ mb: 2 }}
-                    />
-                    <TextField
                         label="Category"
                         variant="outlined"
                         fullWidth
-                        value={newRevenue.category}
-                        onChange={(e) => handleChange("category", e.target.value)}
+                        value={newRevenue.ParentCategoryName}
+                        onChange={(e) => handleChange("ParentCategoryName", e.target.value)}
                         sx={{ mb: 2 }}
                     />
                     <TextField
                         label="Sub-Category"
                         variant="outlined"
                         fullWidth
-                        value={newRevenue.subCategory}
-                        onChange={(e) => handleChange("subCategory", e.target.value)}
+                        value={newRevenue.SubCategoryName}
+                        onChange={(e) => handleChange("SubCategoryName", e.target.value)}
                         sx={{ mb: 2 }}
                     />
                     <TextField

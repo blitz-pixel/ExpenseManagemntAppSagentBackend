@@ -67,7 +67,7 @@ const Home = () => {
                             <Button
                                 component={Link}
                                 to="/login"
-                                variant="contained" // Updated to "contained" for uniform styling
+                                variant="contained"
                                 color="primary"
                                 size="large"
                             >

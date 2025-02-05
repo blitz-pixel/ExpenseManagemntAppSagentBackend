@@ -1,6 +1,7 @@
 package com.example.ExpenseManagementApp.Services;
 
-import com.example.ExpenseManagementApp.Configuration.JwtUtil;
+
+//import com.example.ExpenseManagementApp.Configuration.JwtUtil;
 import com.example.ExpenseManagementApp.DTO.LoginDTO;
 import com.example.ExpenseManagementApp.DTO.RegisterDTO;
 import com.example.ExpenseManagementApp.Model.Account;
@@ -21,17 +22,17 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class UserService implements UserDetailsService {
+// For jwt Authorization do implements UserDetailService
+public class UserService{
 
 
     private final UserRepository userRepository;
-    private final JwtUtil jwtUtil;
+//    private final JwtUtil jwtUtil;
     private final AccountRepository accountRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, JwtUtil jwtUtil, AccountRepository accountRepository) {
+    public UserService(UserRepository userRepository, AccountRepository accountRepository) {
         this.userRepository = userRepository;
-        this.jwtUtil = jwtUtil;
         this.accountRepository = accountRepository;
     }
 
@@ -77,50 +78,56 @@ public class UserService implements UserDetailsService {
 
     }
 
-//    public String getUserID(LoginDTO loginDTO){
+    public User getUserById(Long id) {
+
+
+        return userRepository.findById(id).orElse(null);
+    }
+
+
+    public Long getAccountID(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new IllegalArgumentException("User not found")
+        );
+        Account account = accountRepository.findByUser_Foriegn_id(user.getUser_id()).orElseThrow(
+                () -> new IllegalArgumentException("Account not found")
+        );
+        return account.getAccount_id();
+    }
+
+//    public String authenticateUser(LoginDTO loginDTO) {
+//        //*
 //        Optional<User> userOptional = userRepository.findByEmailAndPassword(loginDTO.getEmail(), loginDTO.getPassword());
+//
 //        if (userOptional.isEmpty()) {
 //            throw new UsernameNotFoundException("User not found with email: " + loginDTO.getEmail());
 //        }
 //
 //        User user = userOptional.get();
 //
-//        return user.getUserName();
+//        // Validate password
+//        if (!(user.getPassword().equals(loginDTO.getPassword()))) {
+//            throw new UsernameNotFoundException("Invalid password");
+//        }
+//
+//        // Generate JWT Token
+//        return jwtUtil.generateToken(user.getEmail());
 //    }
-
-    public String authenticateUser(LoginDTO loginDTO) {
-        //*
-        Optional<User> userOptional = userRepository.findByEmailAndPassword(loginDTO.getEmail(), loginDTO.getPassword());
-
-        if (userOptional.isEmpty()) {
-            throw new UsernameNotFoundException("User not found with email: " + loginDTO.getEmail());
-        }
-
-        User user = userOptional.get();
-
-        // Validate password
-        if (!(user.getPassword().equals(loginDTO.getPassword()))) {
-            throw new UsernameNotFoundException("Invalid password");
-        }
-
-        // Generate JWT Token
-        return jwtUtil.generateToken(user.getEmail());
-    }
-
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // Modify this method to load the user by email (or username)
-        Optional<User> userOptional = userRepository.findByEmail(email);
-
-        if (userOptional.isEmpty()) {
-            throw new UsernameNotFoundException("User not found with email: " + email);
-        }
-
-        // Return a custom UserDetails object (you can use CustomUserDetails)
-        User user = userOptional.get();
-        return new CustomUserDetails(user);
-}
+//
+//
+//    @Override
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        // Modify this method to load the user by email (or username)
+//        Optional<User> userOptional = userRepository.findByEmail(email);
+//
+//        if (userOptional.isEmpty()) {
+//            throw new UsernameNotFoundException("User not found with email: " + email);
+//        }
+//
+//        // Return a custom UserDetails object (you can use CustomUserDetails)
+//        User user = userOptional.get();
+//        return new CustomUserDetails(user);
+//}
 
 }
 

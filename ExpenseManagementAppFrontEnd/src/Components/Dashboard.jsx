@@ -159,7 +159,7 @@ function Dashboard() {
             <Grid container spacing={3}>
                 {/* Income Overview Card */}
                 <Grid item xs={12} sm={6}>
-                    <Link to="/income" style={{ textDecoration: "none" }}>
+                    <Link to="/Revenue" style={{ textDecoration: "none" }}>
                         <Paper
                             sx={{
                                 display: "flex",
@@ -196,7 +196,7 @@ function Dashboard() {
 
                 {/* Expense Overview Card */}
                 <Grid item xs={12} sm={6}>
-                    <Link to="/expense" style={{ textDecoration: "none" }}>
+                    <Link to="/Expense" style={{ textDecoration: "none" }}>
                         <Paper
                             sx={{
                                 display: "flex",
