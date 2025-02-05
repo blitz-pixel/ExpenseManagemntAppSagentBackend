@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public class ExpenseDTO {
+public class TransactionDTO {
     private Long accountId;
     private String description;
     private Instant date;
@@ -37,8 +37,8 @@ public class ExpenseDTO {
 //    }
 
     // For Response
-    public ExpenseDTO(Transaction transaction) {
-        this.accountId = transaction.getId();
+    public TransactionDTO(Transaction transaction) {
+        this.accountId = transaction.getAccount().getAccount_id();
         this.description = transaction.getDescription();
         this.date = transaction.getDate();
         this.amount = transaction.getAmount();
@@ -50,7 +50,7 @@ public class ExpenseDTO {
             this.subCategoryName = "";
         }
     }
-    public ExpenseDTO(){
+    public TransactionDTO(){
     }
 
     // Getters and Setters

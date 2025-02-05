@@ -3,6 +3,7 @@ package com.example.ExpenseManagementApp.Model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -22,6 +23,7 @@ public class  Account {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
+    @JsonIgnore // for now
     private User User_Foriegn_id;
 
 //    @JoinColumn(name = "user_id", nullable = false)

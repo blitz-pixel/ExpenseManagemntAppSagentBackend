@@ -50,10 +50,10 @@ const Navbar = () => {
                             </Link>
                         </Box>
                         <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent: "flex-end" }}>
-                            <Button color="inherit" sx={{ marginRight: 2 }}>Home</Button>
-                            <Button color="inherit" sx={{ marginRight: 2 }}>Settings</Button>
-                            <Button color="inherit" sx={{ marginRight: 2 }}>Categories</Button>
-                            <Button color="inherit" sx={{ marginRight: 2 }}>Log Out</Button>
+                            <Button color="inherit" sx={{ marginRight: 2 }} onClick={() => navigate("/")}>Home</Button>
+                            <Button color="inherit" sx={{ marginRight: 2 }} onClick={() => navigate("/Settings")}>Settings</Button>
+                            <Button color="inherit" sx={{ marginRight: 2 }} onClick={() => navigate("/Categories")}>Categories</Button>
+                            <Button color="inherit" sx={{ marginRight: 2 }} >Log Out</Button>
                         </Box>
                     </Toolbar>
                 </Container>

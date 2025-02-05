@@ -1,6 +1,7 @@
 package com.example.ExpenseManagementApp.DTO;
 
 import com.example.ExpenseManagementApp.Model.Category;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.Nullable;
 import com.example.ExpenseManagementApp.Model.Category;
 import jakarta.annotation.Nullable;
@@ -12,8 +13,9 @@ public class CategoryDTO {
     @Nullable
     private Long userId;
     @Nullable
+    @JsonProperty("SubCategoryName")
     private String SubCategoryName;
-
+    @JsonProperty("ParentCategoryName")
     private String ParentCategoryName;
     private Category.CatType type;
 
@@ -23,6 +25,22 @@ public class CategoryDTO {
         this.SubCategoryName = SubCategoryName;
         this.ParentCategoryName = ParentCategoryName;
         this.type = type;
+    }
+
+    public CategoryDTO(){
+    }
+
+    public CategoryDTO(Category category){
+        if (category.getAccount() != null)this.accountId = category.getAccount().getAccount_id();
+        if (category.getUser() != null)this.userId = category.getUser().getUser_id();
+        if(category.getParent() != null){
+            this.SubCategoryName = category.getName();
+            this.ParentCategoryName = category.getParent().getName();
+        }else{
+            this.ParentCategoryName = category.getName();
+            this.SubCategoryName = "";
+        }
+        this.type = category.getType();
     }
 
     @Nullable
