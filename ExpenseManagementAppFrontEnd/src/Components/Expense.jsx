@@ -1,6 +1,7 @@
 
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Button, TextField, Modal, Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
+import axios from "axios";
 
 const ExpensePage = () => {
     const [expenses, setExpenses] = useState([]);
@@ -13,12 +14,11 @@ const ExpensePage = () => {
         date: "",
     });
 
-    // Handle input change inside modal
     const handleChange = (field, value) => {
         setNewExpense({ ...newExpense, [field]: value });
     };
 
-    // Handle adding the new expense
+
     const handleAddExpense = () => {
         setExpenses([...expenses, { id: expenses.length + 1, serialNo: expenses.length + 1, ...newExpense }]);
         console.log(expenses[0]["name"])
@@ -27,6 +27,13 @@ const ExpensePage = () => {
 
     };
 
+    // useEffect(async () => {
+    //     const response = await axios.get("http://localhost:8080/api/v1/Expense").then(
+    //         resp => {
+    //             response = response.json();
+    //         }
+    //     )
+    // }, [expenses]);
     return (
         <div style={{ padding: "20px", maxWidth: "900px", margin: "auto" }}>
             {/* Header Section with Proper Alignment */}

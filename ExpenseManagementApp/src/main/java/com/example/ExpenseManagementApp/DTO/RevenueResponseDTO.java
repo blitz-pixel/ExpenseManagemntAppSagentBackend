@@ -4,8 +4,8 @@ import com.example.ExpenseManagementApp.Model.Transaction;
 
 import java.util.Date;
 
-public class ExpenseResponseDTO {
-    private Long accountId;
+public class RevenueResponseDTO {
+    private Long accountId; // For Testing
     private String description;
     private Date date;
     private String ParentcategoryName;
@@ -22,8 +22,8 @@ public class ExpenseResponseDTO {
 
 
 
-    public ExpenseResponseDTO(Transaction transaction) {
-        this.accountId = transaction.getId();
+    public RevenueResponseDTO(Transaction transaction) {
+        this.accountId = transaction.getAccount().getAccount_id();
         this.description = transaction.getDescription();
         this.date = Date.from(transaction.getDate());
         this.amount = transaction.getAmount().doubleValue();

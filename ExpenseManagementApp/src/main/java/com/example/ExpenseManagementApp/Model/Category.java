@@ -1,5 +1,7 @@
 package com.example.ExpenseManagementApp.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -11,22 +13,26 @@ import org.hibernate.annotations.*;
 @Setter
 @Entity
 @Table(name = "category")
+//@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Category {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
+//    @Nullable
     private User user;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "account_id", nullable = false)
+    @JoinColumn(name = "account_id", nullable = true)
+//    @Nullable
     private Account account;
 
     @Enumerated(EnumType.STRING)
@@ -82,6 +88,9 @@ public class Category {
         return parent;
     }
 
+    public void setParent(Category parent) {
+        this.parent = parent;
+    }
 
     public enum CatType {
         income,expense
