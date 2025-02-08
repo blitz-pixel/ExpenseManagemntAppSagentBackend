@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,10 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     List<Category> findByAccountIdOrUserID(Long accountId);
 
     Optional<Category> findByNameAndParent(String name, Category parent);
+
+    @Query("SELECT c FROM Category c WHERE c.name = ?1 AND (c.account.account_id = ?2 OR c.user.user_id = ?2)")
+    Optional<Category> findByNameAndId(String name, Long Id);
+
 
 //    @Query("SELECT c FROM Category c WHERE c.name = ?1")
 //    Optional<Category> findParentByName(String name);

@@ -2,7 +2,9 @@ package com.example.ExpenseManagementApp.Tests;
 
 import com.example.ExpenseManagementApp.DTO.CategoryDTO;
 import com.example.ExpenseManagementApp.Model.Category;
+import com.example.ExpenseManagementApp.Model.User;
 import com.example.ExpenseManagementApp.Repositories.CategoryRepository;
+import com.example.ExpenseManagementApp.Repositories.UserRepository;
 import com.example.ExpenseManagementApp.Services.CategoryService;
 import com.example.ExpenseManagementApp.Services.TransactionService;
 import org.junit.jupiter.api.Test;
@@ -23,6 +25,8 @@ public class CategoryTests {
     private TransactionService transactionService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private UserRepository userRepository;
 
 
     @Test
@@ -53,6 +57,15 @@ public class CategoryTests {
         List<Category> Categories = categoryRepository.findByAccountIdOrUserID(42L);
 
         assertNotNull(Categories, "Category should not be null when it exists.");
+    }
+
+    @Test
+    void  testThtFindsSpecificCategory(){
+        User user = userRepository.findById(42L).orElse(null);
+        Category c = categoryRepository.findByNameAndId("Food",user.getUser_id()).orElse(null);
+
+
+        assertNotNull(c, "Category should not be null when it exists.");
     }
 
 

@@ -1,6 +1,5 @@
 package com.example.ExpenseManagementApp.Controllers;
 
-import com.example.ExpenseManagementApp.DTO.RevenueRequest;
 import com.example.ExpenseManagementApp.DTO.TransactionDTO;
 import com.example.ExpenseManagementApp.Model.Category;
 import com.example.ExpenseManagementApp.Model.Transaction;

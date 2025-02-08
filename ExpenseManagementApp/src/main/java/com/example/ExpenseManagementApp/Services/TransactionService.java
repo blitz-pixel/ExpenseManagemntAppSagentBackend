@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.ExpenseManagementApp.Model.User;
 
 import java.time.Instant;
 import java.util.List;
@@ -22,16 +23,20 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final AccountRepository accountRepository;
     private final CategoryRepository categoryRepository;
+    private final UserService userService;
+    private final AccountService accountService;
 
     Logger logger = Logger.getLogger(TransactionService.class.getName());
 
     @Autowired
     public TransactionService(TransactionRepository transactionRepository,
                               AccountRepository accountRepository,
-                              CategoryRepository categoryRepository) {
+                              CategoryRepository categoryRepository, UserService userService, AccountService accountService) {
         this.transactionRepository = transactionRepository;
         this.accountRepository = accountRepository;
         this.categoryRepository = categoryRepository;
+        this.userService = userService;
+        this.accountService = accountService;
     }
 
     @Transactional
@@ -44,9 +49,14 @@ public class TransactionService {
     @Transactional
     public Transaction addTransaction(TransactionDTO transactionDTO, Category.CatType type) {
         validateTransactionDTO(transactionDTO);
-
         Account account = getAccount(transactionDTO.getAccount_id());
-        Category category = getCategory(transactionDTO.getParentCategoryName());
+        Category category = null;
+        if (account.getType().equals(Account.AccountType.shared)) {
+            category = getCategory(transactionDTO.getParentCategoryName(),transactionDTO.getAccount_id());
+        } else {
+            User user = accountService.getUser(account);
+            category = getCategory(transactionDTO.getParentCategoryName(), user.getUser_id());
+        }
         Transaction transaction = createTransaction(transactionDTO, account, category, type);
 
         return transactionRepository.save(transaction);
@@ -63,8 +73,9 @@ public class TransactionService {
                 () -> new IllegalArgumentException("Account not found"));
     }
 
-    private Category getCategory(String parentCategoryName) {
-        return categoryRepository.findByName(parentCategoryName).orElseThrow(
+    private Category getCategory(String parentCategoryName,Long accountId) {
+
+        return categoryRepository.findByNameAndId(parentCategoryName,accountId).orElseThrow(
                 () -> new IllegalArgumentException("Category not found"));
     }
 
@@ -73,7 +84,13 @@ public class TransactionService {
         transaction.setAccount(account);
         transaction.setType(type);
         transaction.setAmount(transactionDTO.getAmount());
-        transaction.setDate(Instant.now());
+        if (transactionDTO.getDate() != null) {
+            transaction.setDate(transactionDTO.getDate());
+
+        } else {
+            transaction.setDate(Instant.now());
+        }
+
         transaction.setCategory(getCategoryForTransaction(transactionDTO, category));
         if (transactionDTO.getDescription() != null && !transactionDTO.getDescription().isEmpty()) {
             transaction.setDescription(transactionDTO.getDescription());
@@ -88,5 +105,9 @@ public class TransactionService {
         } else {
             return parentCategory;
         }
+    }
+
+    public void DeleteTransaction(Long transactionId) {
+        transactionRepository.deleteById(transactionId);
     }
 }

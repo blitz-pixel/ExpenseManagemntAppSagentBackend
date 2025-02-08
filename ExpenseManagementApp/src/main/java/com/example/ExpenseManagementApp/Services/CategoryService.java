@@ -2,7 +2,6 @@ package com.example.ExpenseManagementApp.Services;
 
 
 import com.example.ExpenseManagementApp.DTO.CategoryDTO;
-import com.example.ExpenseManagementApp.DTO.TransactionDTO;
 import com.example.ExpenseManagementApp.Model.Account;
 import com.example.ExpenseManagementApp.Model.Category;
 import com.example.ExpenseManagementApp.Model.User;
@@ -13,46 +12,55 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
+    private final AccountService accountService;
 
 
     Logger logger = Logger.getLogger(CategoryService.class.getName());
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository, AccountRepository accountRepository, UserRepository userRepository) {
+    public CategoryService(CategoryRepository categoryRepository, AccountRepository accountRepository, UserRepository userRepository, AccountService accountService) {
         this.categoryRepository = categoryRepository;
         this.accountRepository = accountRepository;
         this.userRepository = userRepository;
+        this.accountService = accountService;
     }
 
     @Transactional
     public Category createCategory(CategoryDTO categoryDTO) {
         Account account = null;
-        User user = null;
+
         if (categoryDTO.getAccountId() != null) {
             account = accountRepository.findById(categoryDTO.getAccountId()).orElse(null);
-        }
-        if (categoryDTO.getUserId() != null) {
-            user = userRepository.findById(categoryDTO.getUserId()).orElse(null);
+
         }
 
-        if (account == null && user == null) {
+        // Since no shared accounts userId will always be null
+//        if (categoryDTO.getUserId() != null) {
+//            user = userRepository.findById(categoryDTO.getUserId()).orElse(null);
+//        }
+
+        if (account == null) {
             throw new IllegalArgumentException("Account or User does not exist");
         }
 
-        Category parentCategory = categoryRepository.findByName(categoryDTO.getParentCategoryName()).orElse(null);
+        // For no shared accounts (Line 53 and 54)
+        User user = accountService.getUser(account);
+        Category parentCategory = categoryRepository.findByNameAndId(categoryDTO.getParentCategoryName(),user.getUser_id()).orElse(null);
         Category subCategory = categoryRepository.findByNameAndParent(categoryDTO.getSubCategoryName(),parentCategory).orElse(null);
-
+//        System.out.println("PArent " + parentCategory.getId());
         if (categoryDTO.getSubCategoryName() != null && !(categoryDTO.getSubCategoryName().isEmpty()) && parentCategory == null) {
             throw new IllegalArgumentException("Parent Category does not exist");
+        }
+
+        if (parentCategory != null && categoryDTO.getSubCategoryName().isEmpty()) {
+            throw new IllegalArgumentException("Parent Category already exists");
         }
 
 
@@ -63,7 +71,10 @@ public class CategoryService {
 
 
         Category category = new Category();
-        category.setAccount(account);
+
+
+        // No shared accounts so account will always be null
+        category.setAccount(null);
         category.setUser(user);
         category.setType(categoryDTO.getType());
 

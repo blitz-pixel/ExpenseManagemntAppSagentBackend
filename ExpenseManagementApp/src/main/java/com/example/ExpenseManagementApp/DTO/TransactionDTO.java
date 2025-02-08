@@ -2,12 +2,16 @@ package com.example.ExpenseManagementApp.DTO;
 
 import com.example.ExpenseManagementApp.Model.Transaction;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Nullable;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
 public class TransactionDTO {
+    @JsonProperty("accountId")
     private Long accountId;
+    @Nullable
+    private String uuid;
     private String description;
     private Instant date;
 
@@ -38,7 +42,8 @@ public class TransactionDTO {
 
     // For Response
     public TransactionDTO(Transaction transaction) {
-        this.accountId = transaction.getAccount().getAccount_id();
+        this.accountId = transaction.getAccount().getAccountId();
+        this.uuid = transaction.getUuid();
         this.description = transaction.getDescription();
         this.date = transaction.getDate();
         this.amount = transaction.getAmount();
@@ -100,5 +105,10 @@ public class TransactionDTO {
 
     public void setDate(Instant date) {
         this.date = date;
+    }
+
+    @Nullable
+    public String getUuid() {
+        return uuid;
     }
 }
